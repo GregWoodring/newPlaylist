@@ -15,8 +15,10 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "redux-promise-middleware": "^6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +42,8 @@
     ]
   },
   "proxy": "http://localhost:3001",
-  "main": "server/index.js"
+  "main": "server/index.js",
+  "nodemonConfig": [
+    "src/*"
+  ]
 }

@@ -29,7 +29,9 @@ const { connectionString,
 let app = express();
 
 app.use(session({
-    maxAge: 1000*60*60*24*30, //30 days
+    cookie: {
+        maxAge: 1000*60*60*24*30, //30 days
+    },
     resave: false,
     // saveUninitialized: false,
     secret: session_secret,
