@@ -14,10 +14,12 @@ class SongDisplay extends Component{
     //will render picture of song, song name, artist(s) names, album names 
     //(not play time)
     render(){
+        console.log('current song:', this.props.currentSong);
+        console.log('image_arr: ', this.props.image_arr)
         return(
             <div className="song-display">
                 <div>
-                    <img src={this.props.image_url} alt='AlbumCover'/>
+                    <img src={this.props.image_arr ? this.props.image_arr[2].image_url : ''} alt='AlbumCover'/>
                 </div>
                 <div>
                     <h1>Song Name</h1>
@@ -29,8 +31,8 @@ class SongDisplay extends Component{
 
 function mapStateToProps(state){
     return {
-        imageUrl: state.recentlyPlayed.currentSong ? state.recentlyPlayed.currentSong.image_url : '',
-        // songName: state.recentlyPlayed.currentSong.song_name
+        image_arr: state.recentlyPlayed.currentSong ? state.recentlyPlayed.currentSong.image_arr : null,
+        currentSong: state.recentlyPlayed.currentSong
     }
 }
 

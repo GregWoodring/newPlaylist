@@ -51,7 +51,7 @@ massive(connectionString).then(db => {
 app.get('/auth/spotify', authController.oAuth);
 app.get('/auth/check_login', authController.check_login);
 
-app.get('/api/recently_played', authMiddleware.userOnly, dataController.getRecentlyPlayed);
+app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getRecentlyPlayed);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)

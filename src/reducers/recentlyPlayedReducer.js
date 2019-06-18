@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action){
         case GET_RECENTLY_PLAYED +'_PENDING':
             return {...state, loadingRP: true}
         case GET_RECENTLY_PLAYED + '_FULFILLED':
-                if(!state.currentSong){
+                if(state.currentSong){
                     return {...state, loadingRP: false, recentlyPlayed: payload.data}
                 }else{
                     return {...state, loadingRP: false, recentlyPlayed: payload.data, currentSong: payload.data[0] }
