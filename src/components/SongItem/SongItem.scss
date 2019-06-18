@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.song-item{
+    width: 100%;
+    background-color: $background-color;
+    color: $text-color;
+    font-family: $font;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    min-height: 2em;
+}

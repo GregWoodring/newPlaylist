@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.song-list{
+    height: 75vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    div{
+        display: flex;
+    }
+}

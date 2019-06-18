@@ -43,11 +43,13 @@ app.use(session({
 massive(connectionString).then(db => {
     app.set('db', db);
     console.log('database connected');
+}).catch(err => {
+    console.log('database connection error: '+ err)
 });
 
-app.get('/auth/login-spotify', authController.login);
+//app.post('/auth/login-spotify', authController.login);
 app.get('/auth/spotify', authController.oAuth);
-
+app.get('/auth/check_login', authController.check_login);
 
 app.get('/api/recently_played', authMiddleware.userOnly, dataController.getRecentlyPlayed);
 

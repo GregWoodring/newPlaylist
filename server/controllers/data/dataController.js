@@ -13,10 +13,20 @@ module.exports = {
                 }
             }
 
-            axios(requestObj).then(async result => {
+            axios(requestObj).then(result => {
                 let items = result.data.items;
-                let data = await req.app.get('db').import_recently_played_bulk(JSON.stringify(items), userId)
-                res.send(data).status(200);
+                let db = req.app.get('db');
+                db.import_recently_played_bulk(JSON.stringify(items), userId).then(result => {
+                    db.get_recently_played_display(userId).then(result => {
+                        res.send(result).status(200);
+                    }).catch(err => {
+                        res.send(err).status(500);
+                    })
+                }).catch(err => {
+                    res.send(err).status(500);
+                })
+                        
+                
             }).catch(err => {
                 console.log(err);
                 res.send('Server Error: ' + err).status(500);
