@@ -17,13 +17,16 @@ module.exports = {
             axios(requestObj).then(result => {
                 let items = result.data.items;
                 let db = req.app.get('db');
+                
                 db.import_recently_played_bulk(JSON.stringify(items), userId).then(result => {
                     db.get_recently_played_display(userId).then(result => {
                         res.send(result).status(200);
                     }).catch(err => {
+                        console.log(err)
                         res.send(err).status(500);
                     })
                 }).catch(err => {
+                    console.log(err);
                     res.send(err).status(500);
                 })
                         

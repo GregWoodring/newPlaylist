@@ -18,11 +18,15 @@ class SongDisplay extends Component{
         console.log('image_arr: ', this.props.image_arr)
         return(
             <div className="song-display">
-                <div>
-                    <img src={this.props.image_arr ? this.props.image_arr[2].image_url : ''} alt='AlbumCover'/>
-                </div>
-                <div>
-                    <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
+                <div className="display-top">
+                    <div>
+                        <img src={this.props.image_arr ? this.props.image_arr[2].image_url : ''} alt='AlbumCover'/>
+                    </div>
+                    <div className="song-details">
+                        <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
+                        <h2>{this.props.currentSong ? this.props.currentSong.album_name : ''}</h2>
+                        <h2>{this.props.currentSong ? this.props.currentSong.artist_names : ''}</h2>
+                    </div>
                 </div>
             </div>
         )

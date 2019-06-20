@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRecentlyPlayed } from '../../reducers/recentlyPlayedReducer';
+import { getRecentlyPlayed, changeCurrentSong } from '../../reducers/recentlyPlayedReducer';
 
 
 import SongItem from '../SongItem/SongItem'
@@ -42,10 +42,9 @@ class SongList extends Component{
                 {this.props.recentlyPlayed.map(item => {
                     return (
                         <SongItem
-                            songName={item.song_name}
-                            albumName={item.album_name}
-                            artistNames={item.artist_names}
-                            playedAt={item.played_at}
+                            key={item.recently_played_id}
+                            song={item}
+                            click={changeCurrentSong}
                         />
                     )
                 })}
@@ -61,4 +60,4 @@ function mapStateToProps(state){
     
 }
 
-export default connect(mapStateToProps, { getRecentlyPlayed })(SongList)
+export default connect(mapStateToProps, { getRecentlyPlayed, changeCurrentSong })(SongList)

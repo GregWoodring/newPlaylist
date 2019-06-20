@@ -24,6 +24,9 @@ export default function reducer(state = initialState, action){
                 }else{
                     return {...state, loadingRP: false, recentlyPlayed: payload.data, currentSong: payload.data[0] }
                 }
+        case CHANGE_CURRENT_SONG:
+            console.log('changing: ', payload)
+            return {...state, currentSong: payload}
         default:
             return state;
     }
@@ -31,6 +34,7 @@ export default function reducer(state = initialState, action){
 
 const GET_RECENTLY_PLAYED = 'GET_RECENTLY_PLAYED';
 const GET_CURRENT_SONG = 'GET_CURRENT_SONG';
+const CHANGE_CURRENT_SONG = 'CHANGE_CURRENT_SONG';
 
 export const getCurrentSong = song => {
     return {
@@ -46,5 +50,12 @@ export const getRecentlyPlayed = () => {
     return {
         type: GET_RECENTLY_PLAYED,
         payload: data
+    }
+}
+
+export const changeCurrentSong = song => {
+    return {
+        type: CHANGE_CURRENT_SONG,
+        payload: song
     }
 }
