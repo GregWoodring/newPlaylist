@@ -9,6 +9,12 @@ module.exports = {
         res.send(`https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scope}`).status(200)
     },
 
+    logout: (req, res) => {
+        delete req.session.user;
+        console.log('post logout:', req.session)
+        res.redirect('/');
+    },
+
     oAuth: (req, res) => {
         let body =  {
             grant_type : 'authorization_code',
@@ -33,11 +39,13 @@ module.exports = {
                     'Authorization' : `Bearer ${access_token}`
                 }
             }
+            console.log('access_token: ', access_token);
             axios(request).then(result => {
                 let { id, display_name, email, /* url */ birthdate, country, /*followers*/ href } = result.data
                 let url = result.data.external_urls.spotify;
                 let followers = result.data.followers.total;
-    
+                
+                console.log('saving user data:', result);
                 req.app.get('db').create_or_update_user(
                     id,
                     display_name,
@@ -73,7 +81,6 @@ module.exports = {
     
     check_login: (req, res) => {
             try{
-                console.log('hit endpoint')
                 if(req.session.user){
                     res.send(true).status(200);
                 } else {

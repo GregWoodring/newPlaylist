@@ -1,4 +1,5 @@
 const axios = require('axios');
+const authController = require('../auth/authController')
 
 module.exports = {
     getRecentlyPlayed: (req,res) => {
@@ -29,11 +30,12 @@ module.exports = {
                 
             }).catch(err => {
                 console.log(err);
-                res.send('Server Error: ' + err).status(500);
+                //res.sendStatus(500);
+                authController.logout(req, res);
             })
         } catch(err){
             console.log(err);
-            res.send('Server Error: ' + err).status(500);
+            res.sendStatus(500);
         }
         
     }

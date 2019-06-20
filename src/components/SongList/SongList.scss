@@ -1,13 +1,32 @@
 @import '../../styles/variables.scss';
 
 .song-list{
-    height: 75vh;
+    height: 60vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     overflow: auto;
-
+    border-top: 4px solid $text-color;
     div{
         display: flex;
+    }
+}
+
+.song-list-header{
+    background-color: $text-color;
+    height: 2rem;
+    width: 100%;
+    font-family: $font;
+    font-size: .75rem;
+    display: flex;
+    justify-content: space-between;
+    display: none;
+
+    div{
+        width:25%;
+        text-align: right;
+        height: 2em;
+        display: none;
+        align-items: center;
     }
 }

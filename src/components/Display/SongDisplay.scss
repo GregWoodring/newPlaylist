@@ -1,7 +1,14 @@
 @import '../../styles/variables.scss';
 
 .song-display{
-    height: 25vh;
+    height: 40vh;
     background-color: $background-color;
+    color: $text-color;
+    font-family: $font;
+    img{
+        box-shadow: 0 0 100px #fff;
+        margin-top: 2em;
+        margin-bottom: .5em;
 
+    }
 }

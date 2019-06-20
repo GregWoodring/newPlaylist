@@ -50,6 +50,7 @@ massive(connectionString).then(db => {
 //app.post('/auth/login-spotify', authController.login);
 app.get('/auth/spotify', authController.oAuth);
 app.get('/auth/check_login', authController.check_login);
+app.get('/auth/logout', authController.logout);
 
 app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getRecentlyPlayed);
 

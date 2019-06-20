@@ -18,6 +18,7 @@ export default function reducer(state = initialState, action){
         case GET_RECENTLY_PLAYED +'_PENDING':
             return {...state, loadingRP: true}
         case GET_RECENTLY_PLAYED + '_FULFILLED':
+                //console.log('response', payload)
                 if(state.currentSong){
                     return {...state, loadingRP: false, recentlyPlayed: payload.data}
                 }else{
@@ -41,6 +42,7 @@ export const getCurrentSong = song => {
 
 export const getRecentlyPlayed = () => {
     let data = axios.get('/api/recently_played');
+    
     return {
         type: GET_RECENTLY_PLAYED,
         payload: data

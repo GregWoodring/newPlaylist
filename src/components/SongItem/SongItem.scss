@@ -7,6 +7,32 @@
     font-family: $font;
     display: flex;
     justify-content: space-between;
-    font-size: 8px;
-    min-height: 2em;
+    font-size: 10px;
+    height: 4rem;
+    border-bottom: 1px solid $text-color;
+}
+
+.song-info{
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    width: 60%;
+
+    div{
+        padding-top: .5em;
+        display: flex;
+        justify-content: flex-start;
+        
+        span{
+            margin-right: .25em;
+            text-align: left;
+        }
+    }
+}
+
+.play-info{
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+    width: 40%;
 }

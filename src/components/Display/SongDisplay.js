@@ -22,7 +22,7 @@ class SongDisplay extends Component{
                     <img src={this.props.image_arr ? this.props.image_arr[2].image_url : ''} alt='AlbumCover'/>
                 </div>
                 <div>
-                    <h1>Song Name</h1>
+                    <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
                 </div>
             </div>
         )
