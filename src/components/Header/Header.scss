@@ -1,0 +1,55 @@
+@import '../../styles/variables.scss';
+
+.header{
+    height: 7vh;
+    width: 100%;
+    background-color: $alt-background-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $text-color;
+    z-index: 2;
+    font-family: $font;
+    border-bottom: 1px solid $text-color;
+}
+
+.nav-toggle{
+    margin-left: .75em;
+    font-size: 1.25em;
+}
+
+.settings{
+    margin-right: .75em;
+    font-size: 1.25em;
+
+    @media screen and (min-width: $break-large) {
+        margin-right: 1.75em;
+    }
+}
+
+.settings-panel{
+    position: absolute;
+    background-color: $background-color;
+    color: $text-color;
+    list-style: none;
+    width: 5rem;
+    top: 35px;
+    right: 20px;
+    border: 1px solid $text-color;
+    font-size: .75rem;
+
+    ol{
+        li{
+            padding: .25em;
+        }
+
+        li:hover{
+            background-color: $text-color;
+            color: $background-color;
+        }
+    }
+}
+
+.hide{
+    display: none;
+}

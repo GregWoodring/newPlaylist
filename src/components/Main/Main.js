@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginUser } from '../../reducers/userReducer';
-import queryString from 'query-string';
+import { Switch, Route } from 'react-router-dom';
 
-import SongList from '../SongList/SongList';
-import SongDisplay from '../Display/SongDisplay'
+import Header from '../Header/Header';
+import SideBar from '../Sidebar/Sidebar';
+
+import RecentlyPlayed from '../Pages/RecentlyPlayed';
+import Playlists from '../Pages/Playlists';
+
+
 
 //Main Component will render display, sidebar, and list (list is only SongList right now but should be able to be any type of list)
 //SideBar will have Recently Played (Home), playlist, search, and new.
@@ -34,12 +39,13 @@ class Main extends Component{
     render(){
         return(
             <div>
-                <sidebar>
-
-                </sidebar>
+                <SideBar />
                 <body>
-                    <SongDisplay />
-                    <SongList />
+                    <Header />
+                    <Switch>
+                        <Route exact path='/main' component={RecentlyPlayed}/>
+                        <Route path='/main/playlists' component={Playlists}/>
+                    </Switch>
                     <footer>
                         {/* Will someday be song player*/}
                     </footer>

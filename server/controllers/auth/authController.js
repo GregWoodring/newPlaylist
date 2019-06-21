@@ -45,7 +45,7 @@ module.exports = {
                 let url = result.data.external_urls.spotify;
                 let followers = result.data.followers.total;
                 
-                console.log('saving user data:', result);
+                //console.log('saving user data:', result);
                 req.app.get('db').create_or_update_user(
                     id,
                     display_name,

@@ -3,8 +3,7 @@ import axios from 'axios'
 
 const initialState = {
     displayName: '',
-    loggingIn: false,
-    loggedIn: false
+    loggingIn: false
 
 }
 

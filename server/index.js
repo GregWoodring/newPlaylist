@@ -28,6 +28,7 @@ const { connectionString,
 
 let app = express();
 
+app.use(express.json());
 app.use(session({
     cookie: {
         maxAge: 1000*60*60*24*30, //30 days
@@ -50,9 +51,13 @@ massive(connectionString).then(db => {
 //app.post('/auth/login-spotify', authController.login);
 app.get('/auth/spotify', authController.oAuth);
 app.get('/auth/check_login', authController.check_login);
-app.get('/auth/logout', authController.logout);
+app.post('/auth/logout', authController.logout);
 
 app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getRecentlyPlayed);
+
+app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataController.addSongTag);
+app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getSongTags);
+
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)

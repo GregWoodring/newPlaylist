@@ -26,18 +26,6 @@ class SongList extends Component{
         return(
             <div className="song-list">
                 <div className="song-list-header">
-                    <div>
-                        <h3>Song Name</h3>
-                    </div>
-                    <div>
-                        <h3>Album Name</h3>
-                    </div>
-                    <div>
-                        <h3>Artist Names</h3>
-                    </div>
-                    <div>
-                        <h3>Played At</h3>
-                    </div>
                 </div>
                 {this.props.recentlyPlayed.map(item => {
                     return (

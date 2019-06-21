@@ -41,5 +41,42 @@ module.exports = {
             res.sendStatus(500);
         }
         
+    },
+
+    addSongTag: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let { tagDescription, songId } = req.body;
+            let userId = 1 //req.session.user.userid;
+            await db.insert_song_tag(
+                tagDescription,
+                songId,
+                userId
+            )
+
+            res.sendStatus(200);
+        } catch(err){
+            console.log('Error adding song tag: ' + err)
+            res.send(err).status(500);
+        }
+    },
+
+    getSongTags: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let { song_id : songId } = req.params;
+            let userId = 1 //req.session.user.userid;
+
+            let data = await db.get_song_tags(
+                songId,
+                userId
+            );
+
+            res.send(data).status(200);
+        } catch(err){
+            console.log('Error getting song tags: ' + err);
+            res.send(err).status(500);
+        }
+
     }
 }

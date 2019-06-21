@@ -18,14 +18,12 @@ export default function reducer(state = initialState, action){
         case GET_RECENTLY_PLAYED +'_PENDING':
             return {...state, loadingRP: true}
         case GET_RECENTLY_PLAYED + '_FULFILLED':
-                //console.log('response', payload)
                 if(state.currentSong){
                     return {...state, loadingRP: false, recentlyPlayed: payload.data}
                 }else{
                     return {...state, loadingRP: false, recentlyPlayed: payload.data, currentSong: payload.data[0] }
                 }
         case CHANGE_CURRENT_SONG:
-            console.log('changing: ', payload)
             return {...state, currentSong: payload}
         default:
             return state;
