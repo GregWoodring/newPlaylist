@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.sidebar{
+    position: absolute;
+    height: 93vh;
+    width: 60vw;
+    background-color: $alt-background-color;
+    bottom:0;
+    left:0;
+    border-right: 1px solid $text-color;
+
+    @media screen and (min-width: $break-large) {
+        width: 20vw
+    }
+
+    a{
+        text-decoration: none;
+        color: $text-color;
+        
+    }
+    li{
+        border-bottom: 1px solid $text-color;
+        padding: .5em;
+    }
+
+
+}
+
+.hide{
+    display: none;
+}
