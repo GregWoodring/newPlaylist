@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginUser } from '../../reducers/userReducer';
+import { getUserPlaylists } from '../../reducers/playlistReducer';
 import { Switch, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
@@ -35,6 +36,9 @@ class Main extends Component{
     //     })
 
     // }
+    componentDidMount(){
+        getUserPlaylists();
+    }
 
     render(){
         return(
@@ -72,4 +76,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { loginUser })(Main);
+export default connect(mapStateToProps, { loginUser, getUserPlaylists })(Main);

@@ -11,6 +11,7 @@ let { SERVER_PORT } = process.env
 //controllers
 const authController = require('./controllers/auth/authController');
 const dataController = require('./controllers/data/dataController');
+const playlistController = require('./controllers/data/playlistController');
 
 
 //middleware
@@ -57,6 +58,8 @@ app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, 
 
 app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataController.addSongTag);
 app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getSongTags);
+
+app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getUserPlaylists);
 
 
 app.listen(SERVER_PORT, () => {
