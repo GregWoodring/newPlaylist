@@ -45,17 +45,24 @@ module.exports = {
                     console.log(err);
                 }
             })
-
-            
-
-            //console.log('data:', data.data);
-
-            console.log('imported');
-            res.send('imported').status(200);
+            res.sendStatus(200);
         } catch(err){
             console.log(err);
             res.send(err).status(500);
         }
 
+    },
+
+    getPlaylists: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+
+            let data = await db.get_playlists_display(user.userid);
+            res.send(data).status(200);
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
     }
 }

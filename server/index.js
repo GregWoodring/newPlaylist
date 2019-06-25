@@ -60,7 +60,7 @@ app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataCo
 app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getSongTags);
 
 app.get('/api/import_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importUserPlaylists);
-
+app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylists);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
