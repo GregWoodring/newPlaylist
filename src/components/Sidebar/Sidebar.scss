@@ -8,6 +8,7 @@
     bottom:0;
     left:0;
     border-right: 1px solid $text-color;
+    z-index: 10;
 
     @media screen and (min-width: $break-large) {
         width: 20vw

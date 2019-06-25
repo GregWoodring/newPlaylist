@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action){
 const GET_USER_PLAYLISTS = 'GET_USER_PLAYLISTS';
 
 export const getUserPlaylists = async () => {
-    let data = await axios.get('/api/get_playlists');
+    let data = await axios.get('/api/import_playlists');
     return {
         type: GET_USER_PLAYLISTS,
         payload: data

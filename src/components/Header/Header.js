@@ -26,7 +26,7 @@ class Header extends Component{
                     className='nav-toggle'
                     onClick={() => {
                         this.props.toggleSidebar()}}>
-                    <i class="fa fa-bars"></i>
+                    <i className="fa fa-bars"></i>
                 </div>
                 <div>
                     <h1>{this.props.pageHeader}</h1> {/*will need to be controlled by store*/}

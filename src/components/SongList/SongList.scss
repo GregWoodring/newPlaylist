@@ -3,13 +3,13 @@
 .song-list{
     height: 55vh;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    border-top: 4px solid $text-color;
-    div{
-        display: flex;
-    }
+    // display: flex;
+    // flex-direction: column;
+    // overflow: auto;
+    border-top: 1px solid $text-color;
+    // div{
+    //     display: flex;
+    // }
 }
 
 .song-list-header{

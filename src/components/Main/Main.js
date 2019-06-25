@@ -44,7 +44,7 @@ class Main extends Component{
         return(
             <div>
                 <SideBar />
-                <body>
+                <div>
                     <Header />
                     <Switch>
                         <Route exact path='/main' component={RecentlyPlayed}/>
@@ -53,7 +53,7 @@ class Main extends Component{
                     <footer>
                         {/* Will someday be song player*/}
                     </footer>
-                </body>
+                </div>
             </div>
         )
     }

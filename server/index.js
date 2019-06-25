@@ -59,7 +59,7 @@ app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, 
 app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataController.addSongTag);
 app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getSongTags);
 
-app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getUserPlaylists);
+app.get('/api/import_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importUserPlaylists);
 
 
 app.listen(SERVER_PORT, () => {

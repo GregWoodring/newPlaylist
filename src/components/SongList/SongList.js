@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
+
 import { getRecentlyPlayed, changeCurrentSong } from '../../reducers/recentlyPlayedReducer';
 
 
@@ -14,9 +16,37 @@ class SongList extends Component{
         this.state = {
 
         }
+        
+        this.cache = new CellMeasurerCache({
+            fixedWidth: true,
+            defaultHeight: 100
+          })
     }
     componentWillMount(){
         this.props.getRecentlyPlayed()
+    }
+
+    renderRow = ({index, key, style, parent}) => {
+        //console.log('index is:', index)
+        return(
+            
+            <CellMeasurer 
+                key={key}
+                cache={this.cache}
+                parent={parent}
+                columnIndex={0}
+                rowIndex={index}>
+                    <SongItem
+                        passedStyle={style}
+                        song={this.props.recentlyPlayed[index]}
+                        click={this.props.changeCurrentSong}
+                    />
+            </CellMeasurer>
+        )
+    }
+
+    renderList(){
+
     }
 
 
@@ -25,18 +55,28 @@ class SongList extends Component{
         console.log(this.props)
         return(
             <div className="song-list">
-                <div className="song-list-header">
-                </div>
-                {this.props.recentlyPlayed.map(item => {
-                    return (
-                        <SongItem
-                            key={item.recently_played_id}
-                            song={item}
-                            click={changeCurrentSong}
-                        />
-                    )
-                })}
-            </div>
+                <AutoSizer>
+                    {
+                        ({width, height}) =>
+                        {
+                            console.log(width, height)
+                            return (
+                                this.props.recentlyPlayed ? 
+                                <List
+                                    width={width}
+                                    height={height}
+                                    rowHeight={this.cache.rowHeight}
+                                    rowRenderer={this.renderRow}
+                                    rowCount={this.props.recentlyPlayed.length} 
+                                    overscanRowCount={100}
+                                /> : null
+                                
+                            )
+                        }
+                    }
+
+                </AutoSizer>
+           </div>
         )
     }
 }

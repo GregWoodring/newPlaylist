@@ -2,7 +2,7 @@ const axios = require('axios');
 
 
 module.exports = {
-    getUserPlaylists: async (req, res) => {
+    importUserPlaylists: async (req, res) => {
         try{
             let db = req.app.get('db');
             let { user } = req.session;
@@ -29,7 +29,7 @@ module.exports = {
             }
 
 
-            items.forEach(async item => {
+            await items.forEach(async item => {
                 let returnObj = await db.import_playlist(JSON.stringify(item), user.userid);
 
                 //all of the information about the next call is the same, other than the url

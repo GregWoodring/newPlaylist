@@ -9,6 +9,7 @@ let SongItem = props => {
 
     return(
         <div 
+            style={props.passedStyle}
             className="song-item"
             onClick={() => props.changeCurrentSong(props.song)}>
             <div className="song-info">
