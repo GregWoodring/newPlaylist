@@ -5,6 +5,7 @@ import { getRecentlyPlayed, changeCurrentSong } from '../../reducers/recentlyPla
 
 import SongDisplay from '../Display/SongDisplay';
 import SongList from '../SongList/SongList';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 class RecentlyPlayed extends Component{
     constructor(props){
@@ -18,15 +19,22 @@ class RecentlyPlayed extends Component{
     render(){
         console.log('recently played props', this.props)
         return(
-            <div>
-                <SongDisplay 
-                    currentSong={this.props.currentSong}
-                />
-                <SongList 
-                    list={this.props.recentlyPlayed}
-                    changeCurrentSong={this.props.changeCurrentSong}
-                />
+            
+           <div>
+               {this.props.loadingRP ? 
+               <LoadingScreen /> : 
+                <div>
+                        <SongDisplay 
+                            currentSong={this.props.currentSong}
+                        />
+                        <SongList 
+                            list={this.props.recentlyPlayed}
+                            changeCurrentSong={this.props.changeCurrentSong}
+                        />
+                </div>
+                }
             </div>
+            
         )
     }
 }
@@ -34,7 +42,8 @@ class RecentlyPlayed extends Component{
 function mapStateToProps(state){
     return{
         recentlyPlayed: state.recentlyPlayed.recentlyPlayed,
-        currentSong: state.recentlyPlayed.currentSong
+        currentSong: state.recentlyPlayed.currentSong,
+        loadingRP: state.recentlyPlayed.loadingRP
     }
 }
 

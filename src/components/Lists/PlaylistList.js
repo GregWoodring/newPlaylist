@@ -1,11 +1,79 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { changePageHeader } from '../../reducers/routingReducer';
+import { changeCurrentPlaylist } from '../../reducers/playlistReducer';
 
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 
-function PlaylistList(props){
-    return(
-        <div>
+import PlaylistItem from '../ListItems/PlaylistItem';
+
+import './PlaylistList.scss';
+
+class PlaylistList extends Component{
+    constructor(props){
+        super(props);
+
+        this.cache = new CellMeasurerCache({
+            fixedWidth: true,
+            defaultHeight: 100
+        });
+    }
+
+    openPlaylist = playlist => {
+        this.props.changePageHeader(playlist.playlist_name);
+        this.props.changeCurrentPlaylist(playlist);
+        this.props.history.push(`/main/playlists/${playlist.playlist_id}`);
+    }
+
+    renderRow = ({index, key, style, parent}) => {
+        return (
+            <CellMeasurer 
+                key={key}
+                cache={this.cache}
+                parent={parent}
+                columnIndex={0}
+                rowIndex={index}>
+                    <PlaylistItem
+                        playlist={this.props.list[index]}
+                        passedStyle={style}
+                        click={this.openPlaylist}
+                    />
+            </CellMeasurer>
+        )
+    }
+
+
+    render(){
+        return(
             
-        </div>
-    )
+            <div className='playlist-list'>
+                
+                <AutoSizer>
+                    {
+                        ({width, height}) =>
+                        {
+                            console.log(width, height)
+                            return (
+                                <List
+                                    width={width}
+                                    height={height}
+                                    rowHeight={this.cache.rowHeight}
+                                    rowRenderer={this.renderRow}
+                                    rowCount={this.props.list.length} 
+                                    overscanRowCount={20}
+                                /> 
+                            )
+                        }
+                    }
+
+                </AutoSizer>
+            </div>
+        )
+    }
+    
 }
+
+
+
+export default connect(null, { changePageHeader, changeCurrentPlaylist })(withRouter(PlaylistList));

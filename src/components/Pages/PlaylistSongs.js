@@ -6,6 +6,7 @@ import { getPlaylistSongs, changeCurrentPlaylistSong, getPlaylistInfo } from '..
 
 import SongDisplay from '../Display/SongDisplay';
 import SongList from '../SongList/SongList';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 class PlaylistSongs extends Component {
     constructor(props){
@@ -19,18 +20,23 @@ class PlaylistSongs extends Component {
     }
 
     render(){
-        console.log('current playlist:', this.props.currentPlaylist);
         let header = this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : '...fetching';
         this.props.changePageHeader(header);
         return (
-            <div className='playlist-songs'>
-                <SongDisplay 
-                    currentSong={this.props.currentSong}
-                />
-                <SongList 
-                    list={this.props.playlistSongsList}
-                    changeCurrentSong={this.props.changeCurrentPlaylistSong}
-                />
+            <div>
+                {this.props.fetchingSongs ? 
+                    <LoadingScreen /> :
+                    <div className='playlist-songs'>
+                        <SongDisplay 
+                            currentSong={this.props.currentSong}
+                            defaultImg={this.props.currentPlaylist && this.props.currentPlaylist.image_arr ? this.props.currentPlaylist.image_arr[0].image_url : null}
+                            />
+                        <SongList 
+                            list={this.props.playlistSongsList}
+                            changeCurrentSong={this.props.changeCurrentPlaylistSong}
+                            />
+                    </div>
+                }
             </div>
         )
     }
@@ -41,7 +47,8 @@ function mapStateToProps(state){
     return{
         currentPlaylist: state.playlists.currentPlaylist,
         playlistSongsList: state.playlists.playlistSongsList,
-        currentSong: state.playlists.currentPlaylistSong
+        currentSong: state.playlists.currentPlaylistSong,
+        fetchingSongs: state.playlists.fetchingSongs
     }
 }
 

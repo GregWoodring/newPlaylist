@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.playlist-item{
+    color: $text-color;
+    height: 60px;
+    display: flex;
+    align-items: center;
+
+    img{
+        height: 60px;
+        width: 60px;
+    }
+
+    .playlist-info{
+        padding-left: .5em;
+        text-align: left;
+        p{
+            padding-bottom: .2em;
+        }
+    }
+}

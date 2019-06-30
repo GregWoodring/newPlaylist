@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeCurrentSong } from '../../reducers/recentlyPlayedReducer'
+
 import './SongItem.scss'
 
 let SongItem = props => {
@@ -11,26 +11,28 @@ let SongItem = props => {
         <div 
             style={props.passedStyle}
             className="song-item"
-            onClick={() => props.changeCurrentSong(props.song)}>
+            onClick={() => props.click(props.song)}>
             <div className="song-info">
                 <div>               
                     <span
                         className="artist-names"
-                    >{props.song.song_name}</span>
+                    >{props.song && props.song.song_name?  props.song.song_name.trim() : ''}</span>
                 </div>
                 <div>
                     <span
                         className="artist-names"
-                    >{props.song.album_name.trim()}</span>
+                    >{props.song && props.song.album_name ? props.song.album_name.trim() : ''}</span>
                     <span>-</span>
                     <span
                         className="artist-names"
-                    >{props.song.artist_names.trim()}</span>
+                    >{props.song && props.song.artist_names ? props.song.artist_names.trim() : ''}</span>
                 </div>
             </div>
+            {props.song.played_at ? 
             <div className="play-info">
                 {convertDate(props.song.played_at)}
-            </div>
+            </div> : null
+            }
             <div className="controls">
                 <div>
                     <i className="fa fa-ellipsis-v"></i>
@@ -40,7 +42,7 @@ let SongItem = props => {
     )
 }
 
-export default connect(null, { changeCurrentSong })(SongItem);
+export default SongItem;
 
 function convertDate(date){
     date = new Date(date);

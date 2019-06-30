@@ -10,6 +10,7 @@ import SideBar from '../Sidebar/Sidebar';
 
 import RecentlyPlayed from '../Pages/RecentlyPlayed';
 import Playlists from '../Pages/Playlists';
+import PlaylistSongs from '../Pages/PlaylistSongs';
 
 
 
@@ -48,6 +49,7 @@ class Main extends Component{
                     <Header />
                     <Switch>
                         <Route exact path='/main' component={RecentlyPlayed}/>
+                        <Route path='/main/playlists/:playlist_id' component={PlaylistSongs} />
                         <Route path='/main/playlists' component={Playlists}/>
                     </Switch>
                     <footer>

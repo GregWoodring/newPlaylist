@@ -1,3 +1,4 @@
+try{
 const express = require('express');
 const massive = require('massive');
 const session = require('express-session');
@@ -61,7 +62,13 @@ app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth
 
 app.get('/api/import_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importUserPlaylists);
 app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylists);
+app.get('/api/playlist_songs/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistSongs);
+app.get('/api/get_playlist_info/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistInfo);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
 })
+
+} catch(err){
+    console.log('Error in index.js: ' + err);
+}

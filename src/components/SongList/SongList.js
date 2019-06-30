@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 
-import { getRecentlyPlayed, changeCurrentSong } from '../../reducers/recentlyPlayedReducer';
 
 
 import SongItem from '../SongItem/SongItem'
@@ -20,11 +19,9 @@ class SongList extends Component{
         this.cache = new CellMeasurerCache({
             fixedWidth: true,
             defaultHeight: 100
-          })
+        });
     }
-    componentWillMount(){
-        this.props.getRecentlyPlayed()
-    }
+    
 
     renderRow = ({index, key, style, parent}) => {
         //console.log('index is:', index)
@@ -38,7 +35,7 @@ class SongList extends Component{
                 rowIndex={index}>
                     <SongItem
                         passedStyle={style}
-                        song={this.props.recentlyPlayed[index]}
+                        song={this.props.list[index]}
                         click={this.props.changeCurrentSong}
                     />
             </CellMeasurer>
@@ -52,22 +49,21 @@ class SongList extends Component{
 
 
     render(){
-        console.log(this.props)
+        console.log('songlist props:', this.props)
         return(
             <div className="song-list">
                 <AutoSizer>
                     {
                         ({width, height}) =>
                         {
-                            console.log(width, height)
                             return (
-                                this.props.recentlyPlayed ? 
+                                this.props.list ? 
                                 <List
                                     width={width}
                                     height={height}
                                     rowHeight={this.cache.rowHeight}
                                     rowRenderer={this.renderRow}
-                                    rowCount={this.props.recentlyPlayed.length} 
+                                    rowCount={this.props.list.length} 
                                     overscanRowCount={100}
                                 /> : null
                                 
@@ -81,11 +77,5 @@ class SongList extends Component{
     }
 }
 
-function mapStateToProps(state){
-    return {
-        recentlyPlayed: state.recentlyPlayed.recentlyPlayed
-    }
-    
-}
 
-export default connect(mapStateToProps, { getRecentlyPlayed, changeCurrentSong })(SongList)
+export default SongList

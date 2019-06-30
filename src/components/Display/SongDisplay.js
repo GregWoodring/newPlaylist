@@ -14,13 +14,19 @@ class SongDisplay extends Component{
     //will render picture of song, song name, artist(s) names, album names 
     //(not play time)
     render(){
-        console.log('current song:', this.props.currentSong);
-        console.log('image_arr: ', this.props.image_arr)
+        let image = 'https://www.theyearinpictures.co.uk/images//image-placeholder.png';
+        if(this.props.currentSong && this.props.currentSong.image_arr && this.props.currentSong.image_arr[2] && this.props.currentSong.image_arr[2].image_url){
+            image = this.props.currentSong.image_arr[2].image_url;
+        } else if(this.props.defaultImg){
+           
+            image = this.props.defaultImg;
+        }
+
         return(
             <div className="song-display">
                 <div className="display-top">
                     <div>
-                        <img src={this.props.image_arr ? this.props.image_arr[2].image_url : ''} alt='AlbumCover'/>
+                        <img src={image} alt='AlbumCover'/>
                     </div>
                     <div className="song-details">
                         <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
@@ -33,11 +39,5 @@ class SongDisplay extends Component{
     }
 }
 
-function mapStateToProps(state){
-    return {
-        image_arr: state.recentlyPlayed.currentSong ? state.recentlyPlayed.currentSong.image_arr : null,
-        currentSong: state.recentlyPlayed.currentSong
-    }
-}
 
-export default connect(mapStateToProps)(SongDisplay);
+export default SongDisplay;

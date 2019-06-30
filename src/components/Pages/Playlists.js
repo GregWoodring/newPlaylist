@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { changePageHeader } from '../../reducers/routingReducer';
 import { getUserPlaylists } from '../../reducers/playlistReducer';
 
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import PlaylistList from '../Lists/PlaylistList';
 
 class Playlists extends Component{
@@ -26,7 +27,7 @@ class Playlists extends Component{
                 {!this.props.fetchingPlaylists ? 
                 <PlaylistList
                     list={this.props.playlistList}
-                /> : null
+                /> : <LoadingScreen />
             }
                 
             </div>

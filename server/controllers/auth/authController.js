@@ -10,73 +10,83 @@ module.exports = {
     },
 
     logout: (req, res) => {
-        delete req.session.user;
-        console.log('post logout:', req.session)
-        res.redirect('/');
+        try{
+            delete req.session.user;
+            console.log('post logout:', req.session)
+            res.redirect('/');
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
     },
 
     oAuth: (req, res) => {
-        let body =  {
-            grant_type : 'authorization_code',
-            code: req.query.code,
-            redirect_uri,
-            client_id,
-            client_secret,
-            scope
-        };
-    
-        let config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        axios.post('https://accounts.spotify.com/api/token', qs.stringify(body), config).then(result => {
-            let { access_token,  expires_in, refresh_token } = result.data;
-            let request = {
-                method:'GET',
-                url: 'https://api.spotify.com/v1/me',
+        try{
+            let body =  {
+                grant_type : 'authorization_code',
+                code: req.query.code,
+                redirect_uri,
+                client_id,
+                client_secret,
+                scope
+            };
+        
+            let config = {
                 headers: {
-                    'Authorization' : `Bearer ${access_token}`
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }
-            console.log('access_token: ', access_token);
-            axios(request).then(result => {
-                let { id, display_name, email, /* url */ birthdate, country, /*followers*/ href } = result.data
-                let url = result.data.external_urls.spotify;
-                let followers = result.data.followers.total;
-                
-                //console.log('saving user data:', result);
-                req.app.get('db').create_or_update_user(
-                    id,
-                    display_name,
-                    email,
-                    url,
-                    birthdate,
-                    country,
-                    followers,
-                    href,
-                    access_token,
-                    expires_in,
-                    refresh_token
-                ).then(async result => {
-                    //res.send(result);
-                    //console.log(result[0])
-                    req.session.user = result[0];
-                    res.redirect('http://localhost:3000/')
+            axios.post('https://accounts.spotify.com/api/token', qs.stringify(body), config).then(result => {
+                let { access_token,  expires_in, refresh_token } = result.data;
+                let request = {
+                    method:'GET',
+                    url: 'https://api.spotify.com/v1/me',
+                    headers: {
+                        'Authorization' : `Bearer ${access_token}`
+                    }
+                }
+                console.log('access_token: ', access_token);
+                axios(request).then(result => {
+                    let { id, display_name, email, /* url */ birthdate, country, /*followers*/ href } = result.data
+                    let url = result.data.external_urls.spotify;
+                    let followers = result.data.followers.total;
+                    
+                    //console.log('saving user data:', result);
+                    req.app.get('db').create_or_update_user(
+                        id,
+                        display_name,
+                        email,
+                        url,
+                        birthdate,
+                        country,
+                        followers,
+                        href,
+                        access_token,
+                        expires_in,
+                        refresh_token
+                    ).then(async result => {
+                        //res.send(result);
+                        //console.log(result[0])
+                        req.session.user = result[0];
+                        res.redirect('http://localhost:3000/')
+                    }).catch(err => {
+                        //res.send(`Error ${err}`).status(500);
+                        console.log(err)
+                    });
+        
                 }).catch(err => {
-                    //res.send(`Error ${err}`).status(500);
-                    console.log(err)
+                    console.log(err);
+                    res.send(`Error ${err}`).status(500)
                 });
-    
+                
             }).catch(err => {
-                console.log(err);
-                res.send(`Error ${err}`).status(500)
+                console.log(err)
+                res.send(`Error ${err}`).status(500);
             });
-            
-        }).catch(err => {
-            console.log(err)
-            res.send(`Error ${err}`).status(500);
-        });
+        } catch(err){
+            console.log(err);
+            res.send(err);
+        }
     },
     
     check_login: (req, res) => {

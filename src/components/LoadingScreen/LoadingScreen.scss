@@ -1,0 +1,42 @@
+@import '../../styles/variables.scss';
+
+.loading-screen{
+    box-sizing: border-box;
+    height: 93vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    div{
+        height: 150px;
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        position: relative;
+        border-radius: 50%;
+
+        span{
+            position: absolute;
+        }
+    }
+}
+
+.border{
+    height: 100px;
+    width: 100px;
+    border-top: 5px solid $green;
+    border-right: 5px solid $green;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: spin 10s linear infinite;
+    box-shadow: 0 0 10px $light-green;
+}
+
+@keyframes spin{
+    100% {transform: rotate(360deg)}
+}
