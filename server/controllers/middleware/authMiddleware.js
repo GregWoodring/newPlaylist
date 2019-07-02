@@ -28,9 +28,7 @@ module.exports = {
             expireTime.setHours(expireTime.getHours() + 1);
             let currentTime = new Date();
             let difference = expireTime - currentTime;
-            console.log(expireTime);
-            console.log(currentTime);
-            console.log(difference);
+            
             
             if(difference <= 1000 * 60 * 5){ //if token is 55 minutes old get a new one, 
                                                 //done asynchronously so it won't interrupt other request
@@ -54,7 +52,6 @@ module.exports = {
                         result.data.access_token,
                         result.data.expires_in
                     ).then(result => {
-                        console.log('db returned: ', result);
                         req.session.user = result[0];
                     }).catch(err => {
                         console.log(err);

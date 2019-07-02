@@ -11,6 +11,7 @@ let Sidebar = props => {
             <ol>
                 <Link exact to='/main'><li>Recently Played</li></Link>
                 <Link to='/main/playlists'><li>Playlists</li></Link>
+                <Link to='/main/edit_playlist'><li>Add Playlist</li></Link>
             </ol>
         </div>
     )

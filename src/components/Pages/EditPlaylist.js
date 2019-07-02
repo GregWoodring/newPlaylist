@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
+import SongSearch from '../SongSearch/SongSearch';
+import SongList from '../SongList/SongList';
+
 class EditPlaylist extends Component{
     constructor(props){
         super(props);
@@ -11,12 +16,21 @@ class EditPlaylist extends Component{
         }
     }
     render(){
+        console.log(this.props.searchResults);
         return (
-            <div>
+            <div className="edit-playlist">
+                
+                <SongSearch />
                 
             </div>
         )
     }
 }
 
-export default EditPlaylist;
+function mapStateToProps(state){
+    return {
+        searchResults: state.search.results
+    }
+}
+
+export default connect(mapStateToProps)(EditPlaylist);

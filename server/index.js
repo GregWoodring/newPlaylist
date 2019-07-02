@@ -65,6 +65,8 @@ app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, pl
 app.get('/api/playlist_songs/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistSongs);
 app.get('/api/get_playlist_info/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistInfo);
 
+app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAuth, dataController.searchSongs);
+
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
 })
