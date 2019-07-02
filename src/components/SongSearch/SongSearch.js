@@ -6,6 +6,7 @@ import { searchBySongTitle } from '../../reducers/searchReducer';
 
 
 import SongList from '../SongList/SongList';
+import './SongSearch.scss';
 
 
 class SongSearch extends Component{
@@ -25,14 +26,21 @@ class SongSearch extends Component{
     render(){
         return (
             <div className="song-search">
-                <input 
-                    type="text"
-                    onChange={e => {this.setState({searchText: e.target.value})}}
-                    placeholder="search by song title"/>
-                <button onClick={() => this.props.searchBySongTitle(this.state.searchText)}>Search</button>
+                <div className='search-bar'>
+                    <input 
+                        type="text"
+                        onChange={e => {this.setState({searchText: e.target.value})}}
+                        placeholder="search by song title"/>
+                    <button onClick={() => this.state.searchText !== '' ? this.props.searchBySongTitle(this.state.searchText) : null}>Search</button>
+                </div>
                 <SongList 
                     list={this.props.searchResults}
+                    passedStyle={{height: '45vh'}}
                 />
+                <div className="nav-buttons">
+                    <button>Previous</button>
+                    <button>Next</button>
+                </div>
             </div>
         )
     }

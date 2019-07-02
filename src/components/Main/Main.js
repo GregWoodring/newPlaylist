@@ -13,6 +13,7 @@ import Playlists from '../Pages/Playlists';
 import PlaylistSongs from '../Pages/PlaylistSongs';
 import EditPlaylist from '../Pages/EditPlaylist';
 
+import './Main.scss';
 
 
 //Main Component will render display, sidebar, and list (list is only SongList right now but should be able to be any type of list)
@@ -44,9 +45,9 @@ class Main extends Component{
 
     render(){
         return(
-            <div>
+            <div className='main'>
                 <SideBar />
-                <div>
+                <div className='main'>
                     <Header />
                     <Switch>
                         <Route exact path='/main' component={RecentlyPlayed}/>

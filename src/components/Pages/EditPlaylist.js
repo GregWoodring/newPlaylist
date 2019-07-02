@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
+import { getPlaylistInfo, createNewPlaylist } from '../../reducers/playlistReducer';
+import { changePageHeader } from '../../reducers/routingReducer';
+
 import SongSearch from '../SongSearch/SongSearch';
 import SongList from '../SongList/SongList';
+import PlaylistEditDisplay from '../Display/PlaylistEditDisplay';
+
+import './EditPlaylist.scss';
 
 class EditPlaylist extends Component{
     constructor(props){
@@ -15,11 +21,26 @@ class EditPlaylist extends Component{
             song_search: ''
         }
     }
+
+    componentWillMount(){
+        if(this.props.match.params.playlist_id){
+            this.props.getPlaylistInfo(this.props.match.params.playlist_id);
+        } else {
+            this.props.createNewPlaylist();
+        }
+    }
+
     render(){
-        console.log(this.props.searchResults);
+        if(this.fetchingPlaylistInfo){
+            this.props.changePageHeader('...fetching')
+        } else {
+            this.props.changePageHeader(this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : 'New Playlist');
+        }
         return (
             <div className="edit-playlist">
-                
+                <PlaylistEditDisplay 
+                    currentPlaylist={this.props.currentPlaylist}
+                />
                 <SongSearch />
                 
             </div>
@@ -29,8 +50,14 @@ class EditPlaylist extends Component{
 
 function mapStateToProps(state){
     return {
-        searchResults: state.search.results
+        searchResults: state.search.results,
+        currentPlaylist: state.playlists.currentPlaylist,
+        fetchingPlaylistInfo: state.playlists.fetchingPlaylistInfo
     }
 }
 
-export default connect(mapStateToProps)(EditPlaylist);
+export default connect(mapStateToProps, { 
+    getPlaylistInfo, 
+    createNewPlaylist, 
+    changePageHeader 
+})(EditPlaylist);

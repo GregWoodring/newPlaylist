@@ -49,9 +49,8 @@ class SongList extends Component{
 
 
     render(){
-        console.log('songlist props:', this.props)
         return(
-            <div className="song-list">
+            <div className="song-list" style={this.props.passedStyle}>
                 <AutoSizer>
                     {
                         ({width, height}) =>

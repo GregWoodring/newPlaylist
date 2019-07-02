@@ -38,6 +38,8 @@ export default function reducer(state = initialState, action){
             return {...state, fetchingPlaylistInfo: true}
         case GET_PLAYLIST_INFO + '_FULFILLED':
             return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0]}
+        case CREATE_NEW_PLAYLIST:
+            return {...state, currentPlaylist: payload}
         default:
             return state;
     }
@@ -49,6 +51,7 @@ const CHANGE_CURRENT_PLAYLIST = 'CHANGE_CURRENT_PLAYLIST';
 const GET_PLAYLIST_SONGS = 'GET_PLAYLIST_SONGS';
 const CHANGE_CURRENT_PLAYLIST_SONG = 'CHANGE_CURRENT_PLAYLIST_SONG';
 const GET_PLAYLIST_INFO = 'GET_PLAYLIST_INFO';
+const CREATE_NEW_PLAYLIST = 'CREATE_NEW_PLAYLIST';
 
 export const importUserPlaylists = () => {
     let data = axios.get('/api/import_playlists');
@@ -81,7 +84,6 @@ export const getPlaylistSongs = playlistId => {
 }
 
 export const changeCurrentPlaylistSong = item => {
-    console.log('its happening', item);
     return {
         type: CHANGE_CURRENT_PLAYLIST_SONG,
         payload: item
@@ -96,3 +98,18 @@ export const getPlaylistInfo = playlistId => {
     }
 }
 
+export const createNewPlaylist = () => {
+    return {
+        type: CREATE_NEW_PLAYLIST,
+        payload: {
+            playlist_id: null,
+            playlist_name: 'New Playlist',
+            public_playlist: true,
+            tracks_href: null,
+            spotify_uri: null,
+            images: [],
+            total_songs: 0,
+            description: ''
+        }
+    }
+}
