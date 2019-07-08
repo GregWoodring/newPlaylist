@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-
-import './PlaylistEditDisplay.scss'
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import { getPlaylistInfo, postPlaylistImage } from '../../reducers/playlistReducer';
+import { connect } from 'react-redux';
+import './PlaylistEditDisplay.scss';
+import ImageModal from '../Modals/ImageModal';
 
 
 class PlaylistEditDisplay extends Component{
@@ -10,26 +14,87 @@ class PlaylistEditDisplay extends Component{
         this.state = {
             playlist_name: this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : 'New Playlist',
             public: this.props.currentPlaylist ? this.props.currentPlaylist.public_playlist : false,
-            newPlaylist: this.props.currentPlaylist && this.props.currentPlaylist.playlist_id ? false : true
+            newPlaylist: this.props.currentPlaylist && this.props.currentPlaylist.playlist_id ? false : true,
+            image: null,
+            imageUrl: this.props.currentPlaylist && this.props.currentPlaylist.images && this.props.currentPlaylist.images.length > 0 ?  
+            this.props.currentPlaylist.images[0].image_url : 
+            'https://www.theyearinpictures.co.uk/images//image-placeholder.png',
+            showModal: false
         }
     }
 
-    render(){
-        let image = this.props.currentPlaylist && this.props.currentPlaylist.images.length > 0 ?  
-        this.props.currentPlaylist.images[0].image_url : 
-        'https://www.theyearinpictures.co.uk/images//image-placeholder.png';
+    createPlaylist = async () => {
+        console.log('click')
+        let data = await axios.post('/api/create_playlist', {
+            name: this.state.playlist_name,
+            public: this.state.public
+        });
+        this.props.getPlaylistInfo(data.data);
+        this.props.history.push(`/main/edit_playlist/${data.data}`)
+    }
 
+    handleImageUpload = async e => {
+        if(!e.target.files || e.target.files.length < 1) return;
+
+        let type = e.target.files[0].type;
+        type = type.split('/');
+        if(type[0] !== 'image') {
+            alert('Please Select an image file');
+            return;
+        }
+        // } else if(type[1] !== 'jpeg'){
+        //     alert('only jpeg images are supported at this time');
+        //     return;
+        // }
+
+        let src = URL.createObjectURL(e.target.files[0]);
+        toDataURL(src, this.setImage, 'image/jpeg');
+        
+
+        await this.setState({
+            imageUrl: src
+        })
+        console.log(this.state.imageUrl);
+    }
+
+    setImage = dataUrl => {
+        console.log('dataUrl', dataUrl);
+        this.setState({
+            image: dataUrl
+        })
+    }
+
+    toggleModal = () => {
+        this.setState({
+            showModal: !this.state.showModal
+        })
+    }
+
+    uploadImage = (imageUrl, image) => {
+        this.setState({
+            imageUrl
+        });
+        this.props.postPlaylistImage(image, this.props.currentPlaylist.playlist_id);
+        
+    }
+
+    render(){
+        
         return(
             <div className='playlist-edit-display'>
+                {this.state.showModal ? <ImageModal 
+                    passedImageUrl={this.state.imageUrl}
+                    toggleModal={this.toggleModal}
+                    upload={this.uploadImage}/> : null}
                 <div className='playlist-image'>
-                        <img  src={image} alt='playlist cover' />
-                        <div>
-                            <label>Add Playlist Image</label>
-                            <button>
-                                Add
-                            </button>
-                        </div>
+                    <img  src={this.state.imageUrl} alt='playlist cover' />
+                    <div>
+                        <button 
+                        onClick={() => {this.setState({showModal: true})}}
+                        >Add Image</button>
+                        
                     </div>
+                </div>
                 <form>
                     <div>
                         <label>Playlist Name</label>
@@ -48,14 +113,45 @@ class PlaylistEditDisplay extends Component{
                     </div>
                 </form>
                 <div>
-                    <button className='create-button'>
-                        {this.state.newPlaylist ? 'Create Playlist' : 'Update Playlist'}
+                    <button 
+                        className='create-button'
+                        onClick={this.createPlaylist}>
+                        {this.props.newPlaylist ? 'Create Playlist' : 'Update Playlist'}
                     </button>
                 </div>
+                
             </div>
         )
     }
 }
 
+function mapStateToProps(state){
+    return {
+        newPlaylist: state.playlists.newPlaylist,
+        currentPlaylist: state.playlists.currentPlaylist
+    }
+}
 
-export default PlaylistEditDisplay;
+
+export default connect(mapStateToProps, { getPlaylistInfo, postPlaylistImage })(withRouter(PlaylistEditDisplay));
+
+function toDataURL(src, callback, outputFormat) {
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function() {
+      var canvas = document.createElement('CANVAS');
+      var ctx = canvas.getContext('2d');
+      var dataURL;
+      canvas.height = this.naturalHeight;
+      canvas.width = this.naturalWidth;
+      ctx.drawImage(this, 0, 0);
+      dataURL = canvas.toDataURL(outputFormat);
+      callback(dataURL);
+    };
+    img.src = src;
+    if (img.complete || img.complete === undefined) {
+      img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+      img.src = src;
+    }
+  }
+  

@@ -7,3 +7,14 @@ $light-green: #1ed760;
 $green: #1db954;
 $break-large: 992px;
 $font: 'Varela Round', sans-serif;
+$transparent-background-color: rgba(25, 20, 20, .2);
+$red: #ff0000;
+$light-red: #ff3333;
+$yellow: #ffdd00;
+$light-yellow: #ffef00;
+
+$spin: spin 10s linear infinite;;
+
+@keyframes spin{
+    100% {transform: rotate(360deg)}
+}

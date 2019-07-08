@@ -64,8 +64,12 @@ app.get('/api/import_playlists', authMiddleware.userOnly, authMiddleware.reAuth,
 app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylists);
 app.get('/api/playlist_songs/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistSongs);
 app.get('/api/get_playlist_info/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistInfo);
-
+app.get('/api/sync_playlist/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importPlaylistTracks)
 app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAuth, dataController.searchSongs);
+app.post('/api/next_previous_search_result', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getNextPrevious);
+
+app.post('/api/create_playlist', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.createPlaylist);
+app.post('/api/post_playlist_image/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.postPlaylistImage)
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)

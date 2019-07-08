@@ -106,8 +106,9 @@ module.exports = {
     getNextPrevious: async (req, res) => {
         try{
             let accessToken = req.session.user.access_token
-            let url = req.params.url;
-
+            let url = req.body.url;
+            console.log(url);
+            
             let requestObj = {
                 url,
                 method: 'GET',
@@ -118,6 +119,7 @@ module.exports = {
 
             let data = await axios(requestObj);
             let pagingObj = cleanSearchResults(data);
+            console.log(pagingObj);
             res.send(pagingObj).status(200);
         } catch(err){
             console.log(err);

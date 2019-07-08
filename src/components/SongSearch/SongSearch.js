@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { searchBySongTitle } from '../../reducers/searchReducer';
+import { searchBySongTitle, getNextOrPreviousResult } from '../../reducers/searchReducer';
 
 
 import SongList from '../SongList/SongList';
@@ -19,10 +19,7 @@ class SongSearch extends Component{
             tracks: []
         }
     }
-
-    onSearch = () => {
-        
-    }
+    
     render(){
         return (
             <div className="song-search">
@@ -33,13 +30,19 @@ class SongSearch extends Component{
                         placeholder="search by song title"/>
                     <button onClick={() => this.state.searchText !== '' ? this.props.searchBySongTitle(this.state.searchText) : null}>Search</button>
                 </div>
+                {this.props.fetchingSearch ? <div></div> :
                 <SongList 
                     list={this.props.searchResults}
                     passedStyle={{height: '45vh'}}
                 />
+                }
                 <div className="nav-buttons">
-                    <button>Previous</button>
-                    <button>Next</button>
+                    <button 
+                        onClick={() => this.props.getNextOrPreviousResult(this.props.previousUrl)}
+                    >Previous</button>
+                    <button
+                        onClick={() => this.props.getNextOrPreviousResult(this.props.nextUrl)}
+                    >Next</button>
                 </div>
             </div>
         )
@@ -48,8 +51,11 @@ class SongSearch extends Component{
 
 function mapStateToProps(state){
     return{
-        searchResults: state.search.results
+        searchResults: state.search.results,
+        previousUrl: state.search.previousUrl,
+        nextUrl: state.search.nextUrl,
+        fetchingSearch: state.search.fetchingSearch
     }
 }
 
-export default connect(mapStateToProps, { searchBySongTitle })(SongSearch);
+export default connect(mapStateToProps, { searchBySongTitle, getNextOrPreviousResult })(SongSearch);

@@ -40,7 +40,7 @@ class Main extends Component{
 
     // }
     componentDidMount(){
-        importUserPlaylists();
+        this.props.importUserPlaylists();
     }
 
     render(){

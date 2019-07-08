@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changePageHeader } from '../../reducers/routingReducer';
-import { changeCurrentPlaylist } from '../../reducers/playlistReducer';
+import { changeCurrentPlaylist, syncPlaylist } from '../../reducers/playlistReducer';
 
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 
@@ -20,6 +20,7 @@ class PlaylistList extends Component{
         });
     }
 
+    
     openPlaylist = playlist => {
         this.props.changePageHeader(playlist.playlist_name);
         this.props.changeCurrentPlaylist(playlist);
@@ -29,6 +30,7 @@ class PlaylistList extends Component{
     renderRow = ({index, key, style, parent}) => {
         return (
             <CellMeasurer 
+                
                 key={key}
                 cache={this.cache}
                 parent={parent}
@@ -38,10 +40,13 @@ class PlaylistList extends Component{
                         playlist={this.props.list[index]}
                         passedStyle={style}
                         click={this.openPlaylist}
+                        syncing={this.props.syncing}
                     />
             </CellMeasurer>
         )
     }
+
+    
 
 
     render(){
@@ -62,6 +67,7 @@ class PlaylistList extends Component{
                                     rowRenderer={this.renderRow}
                                     rowCount={this.props.list.length} 
                                     overscanRowCount={20}
+                                    
                                 /> 
                             )
                         }
@@ -76,4 +82,4 @@ class PlaylistList extends Component{
 
 
 
-export default connect(null, { changePageHeader, changeCurrentPlaylist })(withRouter(PlaylistList));
+export default connect(null, { changePageHeader, changeCurrentPlaylist, syncPlaylist })(withRouter(PlaylistList));

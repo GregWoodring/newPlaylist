@@ -7,11 +7,16 @@ let initialState = {
     playlistList: [],
     playlistSongsList: [],
     currentPlaylistSong: null,
-    currentPlaylist: null
+    currentPlaylist: null,
+    newPlaylist: false,
+    tracksToAdd: [],
+    syncing: false
 }
 
 export default function reducer(state = initialState, action){
     let { type, payload } = action;
+    let index = 0;
+    let newList = [];
 
     switch(type){
         case IMPORT_USER_PLAYLISTS + '_PENDING':
@@ -21,6 +26,7 @@ export default function reducer(state = initialState, action){
         case GET_USER_PLAYLISTS + '_PENDING':
             return {...state, fetchingPlaylists: true}
         case GET_USER_PLAYLISTS + '_FULFILLED':
+                console.log(payload.data)
             if(state.currentPlaylist){
                 return {...state, playlistList: payload.data, fetchingPlaylists: false}
             } else {
@@ -31,15 +37,21 @@ export default function reducer(state = initialState, action){
         case GET_PLAYLIST_SONGS + '_PENDING':
             return {...state, fetchingSongs: true}
         case GET_PLAYLIST_SONGS + '_FULFILLED':
+            
             return {...state, fetchingSongs: false, playlistSongsList: payload.data, currentPlaylistSong: payload.data[0]}
         case CHANGE_CURRENT_PLAYLIST_SONG:
             return {...state, currentPlaylistSong: payload }
         case GET_PLAYLIST_INFO + '_PENDING':
             return {...state, fetchingPlaylistInfo: true}
         case GET_PLAYLIST_INFO + '_FULFILLED':
-            return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0]}
+            return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0], newPlaylist: true }
         case CREATE_NEW_PLAYLIST:
-            return {...state, currentPlaylist: payload}
+            return {...state, currentPlaylist: payload, newPlaylist: true}
+        case SYNC_PLAYLIST + '_PENDING':
+                return {...state, syncing: true }
+        case SYNC_PLAYLIST + '_FULFILLED':
+            console.log('should stop')
+            return {...state, syncing: false, playlistList: payload.data}
         default:
             return state;
     }
@@ -52,6 +64,9 @@ const GET_PLAYLIST_SONGS = 'GET_PLAYLIST_SONGS';
 const CHANGE_CURRENT_PLAYLIST_SONG = 'CHANGE_CURRENT_PLAYLIST_SONG';
 const GET_PLAYLIST_INFO = 'GET_PLAYLIST_INFO';
 const CREATE_NEW_PLAYLIST = 'CREATE_NEW_PLAYLIST';
+const POST_PLAYLIST_IMAGE = 'POST_PLAYLIST_IMAGE';
+const ADD_TRACKS = 'ADD_TRACKS';
+const SYNC_PLAYLIST = 'SYNC_PLAYLISTS';
 
 export const importUserPlaylists = () => {
     let data = axios.get('/api/import_playlists');
@@ -111,5 +126,21 @@ export const createNewPlaylist = () => {
             total_songs: 0,
             description: ''
         }
+    }
+}
+
+export const postPlaylistImage = (image, playlistId) => {
+    let data = axios.post(`/api/post_playlist_image/${playlistId}`);
+    return {
+        type: POST_PLAYLIST_IMAGE,
+        payload: data
+    }
+}
+
+export const syncPlaylist = (playlistId) => {
+    let data = axios.get(`/api/sync_playlist/${playlistId}`);
+    return {
+        type: SYNC_PLAYLIST,
+        payload: data
     }
 }

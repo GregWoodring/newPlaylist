@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 
 import { getPlaylistInfo, createNewPlaylist } from '../../reducers/playlistReducer';
 import { changePageHeader } from '../../reducers/routingReducer';
 
 import SongSearch from '../SongSearch/SongSearch';
-import SongList from '../SongList/SongList';
 import PlaylistEditDisplay from '../Display/PlaylistEditDisplay';
 
 import './EditPlaylist.scss';
@@ -29,6 +27,8 @@ class EditPlaylist extends Component{
             this.props.createNewPlaylist();
         }
     }
+
+    
 
     render(){
         if(this.fetchingPlaylistInfo){

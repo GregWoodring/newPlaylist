@@ -19,6 +19,7 @@ class Playlists extends Component{
         this.props.changePageHeader('Playlists');
         this.props.getUserPlaylists();
     }
+
     
     render(){
         console.log('fetching...', this.props.fetchingPlaylists)
@@ -27,6 +28,8 @@ class Playlists extends Component{
                 {!this.props.fetchingPlaylists ? 
                 <PlaylistList
                     list={this.props.playlistList}
+                    syncingLists={this.props.syncingLists}
+                    syncing={this.props.syncing}
                 /> : <LoadingScreen />
             }
                 
@@ -39,7 +42,9 @@ class Playlists extends Component{
 function mapStateToProps(state){
     return {
         playlistList: state.playlists.playlistList,
-        fetchingPlaylists: state.playlists.fetchingPlaylists
+        fetchingPlaylists: state.playlists.fetchingPlaylists,
+        syncingLists: state.playlists.syncingLists,
+        syncing: state.playlists.syncing
     }
 }
 
