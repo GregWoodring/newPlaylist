@@ -69,7 +69,8 @@ app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAut
 app.post('/api/next_previous_search_result', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getNextPrevious);
 
 app.post('/api/create_playlist', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.createPlaylist);
-app.post('/api/post_playlist_image/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.postPlaylistImage)
+app.put('/api/edit_playlist/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.editPlaylistDetails);
+app.post('/api/post_playlist_image/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.postPlaylistImage);
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)

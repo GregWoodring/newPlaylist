@@ -38,9 +38,11 @@ class EditPlaylist extends Component{
         }
         return (
             <div className="edit-playlist">
+                {this.props.currentPlaylist ? 
                 <PlaylistEditDisplay 
                     currentPlaylist={this.props.currentPlaylist}
-                />
+                /> : null
+                }
                 <SongSearch />
                 
             </div>

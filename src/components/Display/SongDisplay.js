@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
+import PlaylistSongsControls from '../Controls/PlaylistSongsControls';
 import './SongDisplay.scss'
 
 //will be passed a song on mount and will alter the song based on the current song
@@ -13,7 +13,25 @@ class SongDisplay extends Component{
 
     //will render picture of song, song name, artist(s) names, album names 
     //(not play time)
+
+    //Current plan for displays is to have a switch case
+    //which will render a control panel
+    //this way I can use the same display in multiple areas
+    //which may have different use cases
+    renderControls = () => {
+        switch(this.props.control){
+            case 'playlist-songs':
+                return (
+                    <PlaylistSongsControls
+                        playlist={this.props.currentPlaylist} />
+                );
+            default:
+                return null;
+        }
+    }
+
     render(){
+        //should probably store this image and refrence it.
         let image = 'https://www.theyearinpictures.co.uk/images//image-placeholder.png';
         if(this.props.currentSong && this.props.currentSong.image_arr && this.props.currentSong.image_arr[2] && this.props.currentSong.image_arr[2].image_url){
             image = this.props.currentSong.image_arr[2].image_url;
@@ -33,6 +51,9 @@ class SongDisplay extends Component{
                         <h2>{this.props.currentSong ? this.props.currentSong.album_name : ''}</h2>
                         <h2>{this.props.currentSong ? this.props.currentSong.artist_names : ''}</h2>
                     </div>
+                    {
+                       this.renderControls() 
+                    }
                 </div>
             </div>
         )

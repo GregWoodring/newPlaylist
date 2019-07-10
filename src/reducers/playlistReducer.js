@@ -8,7 +8,6 @@ let initialState = {
     playlistSongsList: [],
     currentPlaylistSong: null,
     currentPlaylist: null,
-    newPlaylist: false,
     tracksToAdd: [],
     syncing: false
 }
@@ -20,13 +19,16 @@ export default function reducer(state = initialState, action){
 
     switch(type){
         case IMPORT_USER_PLAYLISTS + '_PENDING':
-            return {...state, fetchingPlaylists: true}
+            return {...state, fetchingPlaylists: true};
         case IMPORT_USER_PLAYLISTS + '_FULFILLED':
-            return {...state, fetchingPlaylists: false}
+            return {...state, fetchingPlaylists: false};
         case GET_USER_PLAYLISTS + '_PENDING':
-            return {...state, fetchingPlaylists: true}
+            if(action.meta){
+                return state;
+            } else {
+                return {...state, fetchingPlaylists: true};
+            }
         case GET_USER_PLAYLISTS + '_FULFILLED':
-                console.log(payload.data)
             if(state.currentPlaylist){
                 return {...state, playlistList: payload.data, fetchingPlaylists: false}
             } else {
@@ -37,16 +39,16 @@ export default function reducer(state = initialState, action){
         case GET_PLAYLIST_SONGS + '_PENDING':
             return {...state, fetchingSongs: true}
         case GET_PLAYLIST_SONGS + '_FULFILLED':
-            
             return {...state, fetchingSongs: false, playlistSongsList: payload.data, currentPlaylistSong: payload.data[0]}
         case CHANGE_CURRENT_PLAYLIST_SONG:
             return {...state, currentPlaylistSong: payload }
         case GET_PLAYLIST_INFO + '_PENDING':
             return {...state, fetchingPlaylistInfo: true}
         case GET_PLAYLIST_INFO + '_FULFILLED':
-            return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0], newPlaylist: true }
+            console.log('got info:', state.currentPlaylist)
+            return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0] }
         case CREATE_NEW_PLAYLIST:
-            return {...state, currentPlaylist: payload, newPlaylist: true}
+            return {...state, currentPlaylist: payload }
         case SYNC_PLAYLIST + '_PENDING':
                 return {...state, syncing: true }
         case SYNC_PLAYLIST + '_FULFILLED':
@@ -75,11 +77,12 @@ export const importUserPlaylists = () => {
     }
 }
 
-export const getUserPlaylists = () => {
+export const getUserPlaylists = skipLoad => {
     let data = axios.get('/api/get_playlists');
     return {
         type: GET_USER_PLAYLISTS,
-        payload: data
+        payload: data,
+        meta: skipLoad
     }
 }
 

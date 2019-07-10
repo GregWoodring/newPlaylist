@@ -32,7 +32,7 @@ let PlaylistItem = props => {
             </div>
 
             <SyncPlaylist 
-                type={syncStatus}
+                synced={props.playlist.in_sync}
                 playlistId={props.playlist.playlist_id}
                 />
         </div>

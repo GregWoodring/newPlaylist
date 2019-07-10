@@ -14,12 +14,10 @@ class PlaylistEditDisplay extends Component{
         this.state = {
             playlist_name: this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : 'New Playlist',
             public: this.props.currentPlaylist ? this.props.currentPlaylist.public_playlist : false,
-            newPlaylist: this.props.currentPlaylist && this.props.currentPlaylist.playlist_id ? false : true,
-            image: null,
-            imageUrl: this.props.currentPlaylist && this.props.currentPlaylist.images && this.props.currentPlaylist.images.length > 0 ?  
-            this.props.currentPlaylist.images[0].image_url : 
-            'https://www.theyearinpictures.co.uk/images//image-placeholder.png',
-            showModal: false
+            newPlaylist: !this.props.match.params.playlist_id,
+            showModal: false,
+            imageUrl: this.props.currentPlaylist && this.props.currentPlaylist.images && this.props.currentPlaylist.images[0] ? 
+                this.props.currentPlaylist.images[0].image_url : 'https://www.theyearinpictures.co.uk/images//image-placeholder.png'
         }
     }
 
@@ -30,38 +28,19 @@ class PlaylistEditDisplay extends Component{
             public: this.state.public
         });
         this.props.getPlaylistInfo(data.data);
-        this.props.history.push(`/main/edit_playlist/${data.data}`)
-    }
-
-    handleImageUpload = async e => {
-        if(!e.target.files || e.target.files.length < 1) return;
-
-        let type = e.target.files[0].type;
-        type = type.split('/');
-        if(type[0] !== 'image') {
-            alert('Please Select an image file');
-            return;
-        }
-        // } else if(type[1] !== 'jpeg'){
-        //     alert('only jpeg images are supported at this time');
-        //     return;
-        // }
-
-        let src = URL.createObjectURL(e.target.files[0]);
-        toDataURL(src, this.setImage, 'image/jpeg');
-        
-
-        await this.setState({
-            imageUrl: src
-        })
-        console.log(this.state.imageUrl);
-    }
-
-    setImage = dataUrl => {
-        console.log('dataUrl', dataUrl);
+        this.props.history.push(`/main/edit_playlist/${data.data}`);
         this.setState({
-            image: dataUrl
+            newPlaylist: false
         })
+    }
+
+    editPlaylist = async () => {
+        console.log(this.props.match.params.playlist_id)
+        let data = await axios.put(`/api/edit_playlist/${this.props.match.params.playlist_id}`, {
+            name: this.state.playlist_name,
+            public: this.state.public
+        });
+        this.props.getPlaylistInfo(this.props.match.params.playlist_id);
     }
 
     toggleModal = () => {
@@ -74,7 +53,7 @@ class PlaylistEditDisplay extends Component{
         this.setState({
             imageUrl
         });
-        this.props.postPlaylistImage(image, this.props.currentPlaylist.playlist_id);
+        this.props.postPlaylistImage(image, this.props.match.params.playlist_id);
         
     }
 
@@ -115,8 +94,8 @@ class PlaylistEditDisplay extends Component{
                 <div>
                     <button 
                         className='create-button'
-                        onClick={this.createPlaylist}>
-                        {this.props.newPlaylist ? 'Create Playlist' : 'Update Playlist'}
+                        onClick={this.state.newPlaylist ? this.createPlaylist : this.editPlaylist}>
+                        {this.state.newPlaylist ? 'Create Playlist' : 'Update Playlist'}
                     </button>
                 </div>
                 
@@ -127,8 +106,6 @@ class PlaylistEditDisplay extends Component{
 
 function mapStateToProps(state){
     return {
-        newPlaylist: state.playlists.newPlaylist,
-        currentPlaylist: state.playlists.currentPlaylist
     }
 }
 
