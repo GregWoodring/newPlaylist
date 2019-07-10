@@ -28,6 +28,8 @@ class PlaylistSongs extends Component {
                     <LoadingScreen /> :
                     <div className='playlist-songs'>
                         <SongDisplay 
+                            playlist={this.props.currentPlaylist}
+                            control='playlist-songs'
                             currentSong={this.props.currentSong}
                             defaultImg={this.props.currentPlaylist && this.props.currentPlaylist.image_arr ? this.props.currentPlaylist.image_arr[0].image_url : null}
                             />

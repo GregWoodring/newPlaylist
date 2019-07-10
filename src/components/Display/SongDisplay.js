@@ -21,10 +21,15 @@ class SongDisplay extends Component{
     renderControls = () => {
         switch(this.props.control){
             case 'playlist-songs':
-                return (
-                    <PlaylistSongsControls
-                        playlist={this.props.currentPlaylist} />
-                );
+                if(this.props.playlist){
+                    console.log('playlist: ', this.props.playlist)
+                    return (
+                        <PlaylistSongsControls
+                            
+                            playlist={this.props.playlist} />
+                    );
+                }
+                break;
             default:
                 return null;
         }

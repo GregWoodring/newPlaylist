@@ -1,0 +1,16 @@
+@import '../../styles/variables.scss';
+
+.edit-playlist-button{
+    border: 2px solid $text-color;
+    border-radius: 50%;
+    height: 2.5em;
+    width: 2.5em;
+    margin: .5em 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+        color: $text-color;
+    }
+}

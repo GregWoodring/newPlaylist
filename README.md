@@ -21,9 +21,10 @@ and completed features.
         - Playlist Name -- Complete
         - Public Status -- Complete
         - Playlist Cover Image -- partially complete: having trouble posting to api
-        - Playlist tracks -- TODO
+        - Add/Remove Playlist tracks -- TODO
 
-4. Add Song Tags -- TODO
+
+4. Add/Remove Song Tags -- TODO
 
 5. Add Song Ratings -- TODO
     - At least have dislike(exclude)
@@ -49,6 +50,7 @@ and completed features.
         - Should be able to add to any other playlist as well
             - Should be able to use PlaylistList component for playlist selection,
             will require refactoring to allow the unclick function to be over-written
+        - Should be able to see playlists song is in, and remove song from any playlist
 
 3. Add Song Tags
     - Add as control not on changeable control panel but song display itself
