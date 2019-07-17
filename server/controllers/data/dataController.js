@@ -17,8 +17,9 @@ module.exports = {
             axios(requestObj).then(result => {
                 let items = result.data.items;
                 let db = req.app.get('db');
-                
+                console.log(items);
                 db.import_recently_played_bulk(JSON.stringify(items), userId).then(result => {
+
                     db.get_recently_played_display(userId).then(result => {
                         res.send(result).status(200);
                     }).catch(err => {
@@ -46,7 +47,13 @@ module.exports = {
         try{
             let db = req.app.get('db');
             let { tagDescription, songId } = req.body;
-            let userId = 1 //req.session.user.userid;
+            let userId = req.session.user.userid;
+
+            tagDescription = tagDescription.toLowerCase();
+            let regex = new RegExp(/^[A-Za-z]+$/);
+            if(!regex.test(tagDescription))
+                throw new Error('Invalid input for tagDescription')
+
             await db.insert_song_tag(
                 tagDescription,
                 songId,
@@ -56,6 +63,20 @@ module.exports = {
             res.sendStatus(200);
         } catch(err){
             console.log('Error adding song tag: ' + err)
+            res.send(err).status(500);
+        }
+    },
+
+    removeSongTag: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+            let songTagId = req.params.song_tag_id;
+
+            let data = db.remove_song_tag(songTagId, user.userid);
+            res.send(data).status(200);
+        } catch(err){
+            console.log('Error removing tag' ,err);
             res.send(err).status(500);
         }
     },
@@ -77,6 +98,51 @@ module.exports = {
             res.send(err).status(500);
         }
 
+    },
+
+    getPinnedTags: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+
+            let data = await db.get_pinned_tags(user.userid);
+            console.log('tags', data)
+            res.send(data).status(200);
+        } catch(err){
+            console.log('Error getting Pinned Tags: '+ err);
+            res.send(err).status(500);
+        }
+    },
+
+    removePinnedTag: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+            let tagId = req.params.tag_id;
+
+            let data = await db.remove_pinned_tag(user.userid, tagId);
+
+            res.send(data).status(200);
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
+    },
+
+    pinTag: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+            let tagId = req.params.tag_id;
+
+            let data = await db.pin_tag(user.userid, tagId);
+            res.send(data).status(200);
+
+
+        } catch(err) {
+            console.log(err);
+            res.send(err).status(500);
+        }
     },
 
     searchSongs: async (req, res) => {
@@ -148,6 +214,7 @@ function cleanSearchResults(data){
                 }
             });
             obj.album_name = item.album.name;
+            obj.spotify_uri = item.uri;
             obj.original = item;
             return obj;
         });

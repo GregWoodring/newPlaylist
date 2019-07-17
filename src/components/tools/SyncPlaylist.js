@@ -14,13 +14,14 @@ const notSynced = 'fetch-control fetch-control-not-synced';
 let SyncPlaylist = props => {
 
     const [type, setType] = useState(props.synced ? synced : notSynced);
+
     return(
         <div className={type}>
             <button
                 onClick={() => {
                     setType(syncing);
                     axios.get(`/api/sync_playlist/${props.playlistId}`).then(res => {
-                        if(res.data){
+                        if(res.data && res.status !== 500){
                             setType(synced);
                         } else {
                             setType(notSynced);

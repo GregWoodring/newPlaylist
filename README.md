@@ -68,6 +68,14 @@ and completed features.
 6. Update playlist to Spotify's, update spotify to playlist
 
 
+## Bugs
+
+1. login redirects to bad page '_=_'?
+2. Logout gets hidden by sync
+3. If you are logged out you aren't always redirected to login screen
+    - likely need to have error handler that redirects when logout status code comes through
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

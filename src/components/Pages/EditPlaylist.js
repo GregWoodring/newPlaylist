@@ -36,6 +36,9 @@ class EditPlaylist extends Component{
         } else {
             this.props.changePageHeader(this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : 'New Playlist');
         }
+
+        if(!this.props.currentPlaylist && !this.props.fetchingPlaylistInfo) this.props.createNewPlaylist();
+        
         return (
             <div className="edit-playlist">
                 {this.props.currentPlaylist ? 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import AddTagButton from '../tools/AddTagButton';
 import PlaylistSongsControls from '../Controls/PlaylistSongsControls';
 import './SongDisplay.scss'
 
@@ -44,20 +45,32 @@ class SongDisplay extends Component{
            
             image = this.props.defaultImg;
         }
+        console.log(this.props.currentSong)
 
         return(
             <div className="song-display">
                 <div className="display-top">
-                    <div>
-                        <img src={image} alt='AlbumCover'/>
+                    <div className='information-display'>
+                        <div>
+                            <img src={image} alt='AlbumCover' className='album-art'/>
+                        </div>
+                        <div className="song-details">
+                            <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
+                            <h2>{this.props.currentSong ? this.props.currentSong.album_name : ''}</h2>
+                            <h2>{this.props.currentSong ? this.props.currentSong.artist_names : ''}</h2>
+                        </div>
                     </div>
-                    <div className="song-details">
-                        <h1>{this.props.currentSong ? this.props.currentSong.song_name: ''}</h1>
-                        <h2>{this.props.currentSong ? this.props.currentSong.album_name : ''}</h2>
-                        <h2>{this.props.currentSong ? this.props.currentSong.artist_names : ''}</h2>
-                    </div>
+                    <div className='conditional-controls'>
                     {
                        this.renderControls() 
+                    }
+                    </div>
+                </div>
+                <div className='controls-bottom'>
+                    {this.props.currentSong ?
+                    <AddTagButton 
+                        song={this.props.currentSong}
+                    /> : null
                     }
                 </div>
             </div>

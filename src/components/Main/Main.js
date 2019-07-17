@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginUser } from '../../reducers/userReducer';
 import { importUserPlaylists } from '../../reducers/playlistReducer';
+import { getPinnedTags } from '../../reducers/tagReducer';
 import { Switch, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
@@ -41,6 +42,7 @@ class Main extends Component{
     // }
     componentDidMount(){
         this.props.importUserPlaylists();
+        this.props.getPinnedTags();
     }
 
     render(){
@@ -65,13 +67,7 @@ class Main extends Component{
     }
 }
 
-//Likely want an enum for which type I'm viewing
-//  Types:
-//       1. Song (Rater)
-//       2. Artist (Finder)
-//       3. Album (Finder)
-//       4. Playlist (Classification) 
-//       5. Playlist (Search/Generator)
+
 
 
 
@@ -82,4 +78,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { loginUser, importUserPlaylists })(Main);
+export default connect(mapStateToProps, { loginUser, importUserPlaylists, getPinnedTags })(Main);

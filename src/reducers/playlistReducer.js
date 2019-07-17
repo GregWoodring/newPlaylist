@@ -67,7 +67,7 @@ const CHANGE_CURRENT_PLAYLIST_SONG = 'CHANGE_CURRENT_PLAYLIST_SONG';
 const GET_PLAYLIST_INFO = 'GET_PLAYLIST_INFO';
 const CREATE_NEW_PLAYLIST = 'CREATE_NEW_PLAYLIST';
 const POST_PLAYLIST_IMAGE = 'POST_PLAYLIST_IMAGE';
-const ADD_TRACKS = 'ADD_TRACKS';
+const ADD_SONGS = 'ADD_SONGS';
 const SYNC_PLAYLIST = 'SYNC_PLAYLISTS';
 
 export const importUserPlaylists = () => {
@@ -144,6 +144,17 @@ export const syncPlaylist = (playlistId) => {
     let data = axios.get(`/api/sync_playlist/${playlistId}`);
     return {
         type: SYNC_PLAYLIST,
+        payload: data
+    }
+}
+
+export const addSongs = (playlistId, songArr) => {
+    let data = axios.post('/api/add_playlist_song', {
+        songArr,
+        playlistId
+    });
+    return{
+        type: ADD_SONGS,
         payload: data
     }
 }

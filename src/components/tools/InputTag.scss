@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.input-tag{
+    width: 100%;
+    border: none;
+    // border-top: 2px solid $green;
+    height: 10%;
+    margin-top: 1px;
+    input{
+        width: 80%;
+        height: 100%;
+        padding: .35em;
+        border-left: none;//2px solid $green;
+        border-bottom: 2px solid $green;
+        border-top: none;
+        border-right: none;
+        border-radius: 0 0 0 20px;
+        text-align: center;
+    }
+
+    button{
+        width: 20%;
+        height: 100%;
+        padding: .35em;
+        border-right: 2px solid $green;
+        border-bottom: 2px solid $green;
+        border: none;
+        border-radius: 0 0 20px 0;
+        background-color: $green;
+        color: #fff;
+        font-family: $font;
+    }
+}

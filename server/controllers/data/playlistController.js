@@ -29,7 +29,7 @@ module.exports = {
                     nextUrl = newData.data.next;
                 }
             }
-            
+            console.log(items);
             
             //function returns null but unless I assign it to something it won't catch errors
             let forCatch = db.import_playlist_bulk(JSON.stringify(items), user.userid);
@@ -46,6 +46,7 @@ module.exports = {
             let db = req.app.get('db');
             let { user } = req.session;
             let { playlist_id } = req.params;
+            console.log('playlist_id', playlist_id)
             let playlist_spotify_id = await db.get_playlist_spotify_id(playlist_id, user.userid);
 
             let request = {
@@ -203,6 +204,7 @@ module.exports = {
         try{
             let db = req.app.get('db');
             let user = req.session.user;
+            console.log('user:', user);
             let playlist_id = req.params.playlist_id;
             console.log('playlist_id:', playlist_id);
             let { name, public_playlist } = req.body;
@@ -246,7 +248,42 @@ module.exports = {
             res.send(err).status(500);
         }
 
+    },
+
+    addSongsToPlaylist: async (req, res) =>{
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+
+            let songsArr = res.body.songsArr;
+            let playlistId = res.body.playlistId;
+
+            let uris = songsArr.map(item => item.spotify_uri)
+
+            let playlist_spotify_id = await db.get_playlist_spotify_id(playlistId, user.userid);
+
+            let requestObj = {
+                url: `https://api.spotify.com/v1/playlists/${playlist_spotify_id[0].get_playlist_spotify_id}/tracks`,
+                method: 'POST',
+                headers: {
+                    'Authorization' : `Bearer ${user.access_token}`,
+                    'Content-Type' : 'application/json'
+                },
+                data: uris
+            }
+
+            let response = await axios(requestObj);
+
+            
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
+
+
+
     }
+
 
     // postPlaylistImage: async (req, res) => {
     //     try{

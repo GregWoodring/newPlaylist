@@ -1,0 +1,68 @@
+@import '../../styles/variables.scss';
+
+.tag-item{
+    height: 1.5em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: .25em;
+    
+    
+}
+
+.tag-controls{
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    button{
+        border-radius: 50%;
+        height: 1.75em;
+        width: 1.75em;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        margin: 0 .5em;
+    }
+}
+
+.add-tag{
+    background-color: $green;
+    color: #fff;
+}
+
+.remove-tag{
+    background-color: $red;
+    color: $background-color;
+    font-size: .75em;
+}
+
+.remove-tag:hover{
+    background-color: $light-red;
+}
+
+.remove-pinned-tag{
+    background-color: $red;
+    color: $background-color;
+    position: relative;
+
+    *{
+        transform: rotate(15deg);
+        position: absolute;
+        right: .35em;
+    }
+}
+
+.pin-tag{
+    background-color: $green;
+    color: #fff;
+    position: relative;
+
+    *{
+        transform: rotate(15deg);
+        position: absolute;
+        right: .35em;
+    }
+}

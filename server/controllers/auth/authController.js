@@ -47,6 +47,7 @@ module.exports = {
                 }
                 console.log('access_token: ', access_token);
                 axios(request).then(result => {
+                    console.log('I got: ', result);
                     let { id, display_name, email, /* url */ birthdate, country, /*followers*/ href } = result.data
                     let url = result.data.external_urls.spotify;
                     let followers = result.data.followers.total;
