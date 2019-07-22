@@ -37,6 +37,7 @@ class PlaylistSongs extends Component {
                         <SongList 
                             list={this.props.playlistSongsList}
                             changeCurrentSong={this.props.changeCurrentPlaylistSong}
+                            hideControls={true}
                             />
                     </div>
                 }

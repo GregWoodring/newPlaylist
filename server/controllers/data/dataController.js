@@ -17,7 +17,6 @@ module.exports = {
             axios(requestObj).then(result => {
                 let items = result.data.items;
                 let db = req.app.get('db');
-                console.log(items);
                 db.import_recently_played_bulk(JSON.stringify(items), userId).then(result => {
 
                     db.get_recently_played_display(userId).then(result => {
@@ -106,7 +105,6 @@ module.exports = {
             let user = req.session.user;
 
             let data = await db.get_pinned_tags(user.userid);
-            console.log('tags', data)
             res.send(data).status(200);
         } catch(err){
             console.log('Error getting Pinned Tags: '+ err);
@@ -173,7 +171,6 @@ module.exports = {
         try{
             let accessToken = req.session.user.access_token
             let url = req.body.url;
-            console.log(url);
             
             let requestObj = {
                 url,

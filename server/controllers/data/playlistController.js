@@ -255,15 +255,34 @@ module.exports = {
             let db = req.app.get('db');
             let user = req.session.user;
 
-            let songsArr = res.body.songsArr;
-            let playlistId = res.body.playlistId;
+            let songsArr = req.body.songsArr;
+            let playlistId = req.body.playlistId;
 
-            let uris = songsArr.map(item => item.spotify_uri)
+            let uris = songsArr.map((item, index) => item.spotify_uri);
+            await songsArr.forEach(async (item, index) => {
+                //Songs from search are not imported automatically due to space concerns, they will not have a property
+                //song_id and will have an original. This will import the song and set the object in the songs array to be
+                //what was originally sent from spotify, for importing purposes.
+                
+                if(!item.song_id && item.original){
+                    songsArr[index] = {track: songsArr[index].original};
+                    await db.import_song(JSON.stringify(item.original)).then(res => {
+                        console.log('hit this')
+                        
+                    }).catch(err => {
+                        throw new Error(`Error importing song ${songsArr[index].song_name}. Error: ${err}`);
+                    });
+                }
+
+            })
+
+
 
             let playlist_spotify_id = await db.get_playlist_spotify_id(playlistId, user.userid);
+            playlist_spotify_id = playlist_spotify_id[0].get_playlist_spotify_id;
 
             let requestObj = {
-                url: `https://api.spotify.com/v1/playlists/${playlist_spotify_id[0].get_playlist_spotify_id}/tracks`,
+                url: `https://api.spotify.com/v1/playlists/${playlist_spotify_id}/tracks`,
                 method: 'POST',
                 headers: {
                     'Authorization' : `Bearer ${user.access_token}`,
@@ -274,9 +293,14 @@ module.exports = {
 
             let response = await axios(requestObj);
 
-            
+            db.import_playlist_tracks(playlistId, JSON.stringify(songsArr)).then(dbRes => {
+                res.sendStatus(201);
+            }).catch(err => {
+                throw new Error(`Error importing playlist tracks after posting to spotify Error: ${err}`);
+            });
+
         } catch(err){
-            console.log(err);
+            console.log('Error adding tracks to playlist Error: ' + err);
             res.send(err).status(500);
         }
 

@@ -37,16 +37,11 @@ class SongList extends Component{
                         passedStyle={style}
                         song={this.props.list[index]}
                         click={this.props.changeCurrentSong}
+                        hideControls={this.props.hideControls}
                     />
             </CellMeasurer>
         )
     }
-
-    renderList(){
-
-    }
-
-
 
     render(){
         return(

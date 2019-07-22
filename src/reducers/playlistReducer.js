@@ -148,9 +148,10 @@ export const syncPlaylist = (playlistId) => {
     }
 }
 
-export const addSongs = (playlistId, songArr) => {
-    let data = axios.post('/api/add_playlist_song', {
-        songArr,
+export const addSongs = (playlistId, songsArr) => {
+    console.log('songs arr:', songsArr)
+    let data = axios.post('/api/add_song_to_playlist', {
+        songsArr,
         playlistId
     });
     return{

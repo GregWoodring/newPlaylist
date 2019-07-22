@@ -10,8 +10,8 @@ let Sidebar = props => {
     return(
         <div className={props.showSidebar ? 'sidebar' : 'hide'}>
             <ol>
-                <Link exact to='/main'><li>Recently Played</li></Link>
-                <Link to='/main/playlists'><li>Playlists</li></Link>
+                <Link exact to='/main'><li onClick={() => props.changeCurrentPlaylist(null)}>Recently Played</li></Link>
+                <Link to='/main/playlists'><li onClick={() => props.changeCurrentPlaylist(null)}>Playlists</li></Link>
                 <Link to='/main/edit_playlist'><li onClick={() => props.changeCurrentPlaylist(null)}>Add Playlist</li></Link>
             </ol>
         </div>

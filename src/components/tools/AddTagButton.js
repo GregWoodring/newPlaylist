@@ -9,7 +9,6 @@ import CurrentTagList from '../Lists/CurrentTagList';
 
 let AddTagButton = props => {
     let [modalState, setModalState] = useState('hide');
-    console.log('song',props.song)
     return(
         <div 
             className='add-tag-button'
