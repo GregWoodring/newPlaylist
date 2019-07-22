@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import convertDate from '../../functions/convertDate';
+import { addSongs } from '../../reducers/playlistReducer';
 
 import './SongItem.scss'
 
 let SongItem = props => {
-    //let songName = props.songName.trim().length > 50 ? props.songName.substring(0, 47) + '...' : props.songName
-    
+    const [controlsClass, setControlsClass] = useState('hide');
 
     return(
         <div 
             style={props.passedStyle}
             className="song-item"
-            onClick={() => props.click(props.song)}>
+            onClick={() => props.click ? props.click(props.song) : null}>
             <div className="song-info">
                 <div>               
                     <span
@@ -33,27 +34,43 @@ let SongItem = props => {
                 {convertDate(props.song.played_at)}
             </div> : null
             }
+            {
+                props.hideControls ? null :
             <div className="controls">
-                <div>
+                <div 
+                className='green-circle'
+                onClick={() => {
+                    setControlsClass(controlsClass === 'control-panel open-panel' ? 'control-panel close-panel' : 'control-panel open-panel');
+                }}>
                     <i className="fa fa-ellipsis-v"></i>
                 </div>
+                <div className={controlsClass}>
+                    <ul>
+                        <li className={props.currentPlaylist && props.currentPlaylist.playlist_id ? '' : 'hide'}>
+                            <button onClick={() => addSongs(props.currentPlaylist.playlist_id, [props.song])}>
+                                Add
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                Select Playlist to Add
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            }
         </div>
     )
 }
 
-export default SongItem;
-
-function convertDate(date){
-    date = new Date(date);
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let year = date.getFullYear() - 2000;
-    let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-    hours = hours === 0 ? 12 : hours;
-    let minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
-    let amPM = date.getHours > 11 && date.getHours !== 0 ? 'AM' : 'PM';
-
-    return `${month}/${day}/${year} ${hours}:${minutes} ${amPM}`;
+function mapStateToProps(state){
+    return{
+        currentPlaylist: state.playlists.currentPlaylist
+    }
 }
+
+export default connect(mapStateToProps, { addSongs })(SongItem);
+
+
 

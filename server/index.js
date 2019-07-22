@@ -3,8 +3,6 @@ const express = require('express');
 const massive = require('massive');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const axios = require('axios');
-const qs = require('qs');
 require('dotenv').config();
 
 let { SERVER_PORT } = process.env
@@ -14,19 +12,10 @@ const authController = require('./controllers/auth/authController');
 const dataController = require('./controllers/data/dataController');
 const playlistController = require('./controllers/data/playlistController');
 
-
 //middleware
 const authMiddleware = require('./controllers/middleware/authMiddleware')
 
-const { connectionString, 
-    session_secret,
-    client_id,
-    redirect_uri,
-    scope,
-    client_secret
- } = require('../secret.js');
-
- 
+const { connectionString, session_secret } = require('../secret.js');
 
 let app = express();
 
@@ -50,25 +39,29 @@ massive(connectionString).then(db => {
     console.log('database connection error: '+ err)
 });
 
-//app.post('/auth/login-spotify', authController.login);
+
+//Auth
 app.get('/auth/spotify', authController.oAuth);
 app.get('/auth/check_login', authController.check_login);
 app.post('/auth/logout', authController.logout);
 
+//Recently Played
 app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getRecentlyPlayed);
 
+//Search
+app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAuth, dataController.searchSongs);
+app.post('/api/next_previous_search_result', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getNextPrevious);
 
+//Playlists
 app.get('/api/import_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importUserPlaylists);
 app.get('/api/get_playlists', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylists);
 app.get('/api/playlist_songs/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistSongs);
 app.get('/api/get_playlist_info/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.getPlaylistInfo);
-app.get('/api/sync_playlist/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importPlaylistTracks)
-app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAuth, dataController.searchSongs);
-app.post('/api/next_previous_search_result', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getNextPrevious);
-
+app.get('/api/sync_playlist/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.importPlaylistTracks);
 app.post('/api/create_playlist', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.createPlaylist);
 app.put('/api/edit_playlist/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.editPlaylistDetails);
 app.post('/api/post_playlist_image/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.postPlaylistImage);
+app.post('/api/add_song_to_playlist',  authMiddleware.userOnly, authMiddleware.reAuth, playlistController.addSongsToPlaylist);
 
 //Pins
 app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataController.addSongTag);
@@ -77,6 +70,8 @@ app.get('/api/get_pinned_tags', authMiddleware.userOnly, authMiddleware.reAuth, 
 app.delete('/api/remove_pinned_tag/:tag_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.removePinnedTag);
 app.post('/api/pin_tag/:tag_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.pinTag);
 app.delete('/api/remove_song_tag/:song_tag_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.removeSongTag);
+
+
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
 })

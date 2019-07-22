@@ -61,7 +61,7 @@
     padding-right: 1em;
     //height: 4rem;
 
-    div{
+    .green-circle{
         font-size: 2em;
         background-color: $green;
         width: 1.5em;
@@ -77,4 +77,46 @@
         text-align: center;
         
     }
+}
+
+
+.hide{
+    display: none;
+}
+
+.control-panel{
+    position: absolute;
+    right: 6em;
+    top: 1em;
+    background-color: $alt-background-color;
+    font-size: .75em;
+    width: 300%;
+    z-index: 25;
+    border: 2px solid $green;
+    border-radius: 10px;
+    padding: 0 10px;
+    ul{
+        li{
+            button{
+                background-color: $background-color;
+                color: $text-color;
+                width: 100%;
+                border-bottom: 1px solid $text-color;
+                padding: .5em 0;
+                font-size: 1.35em;
+            }
+            button:hover{
+                background-color: $light-green;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.open-panel{
+    animation: $open-right;
+}
+
+.close-panel{
+    animation: $close-right;
 }

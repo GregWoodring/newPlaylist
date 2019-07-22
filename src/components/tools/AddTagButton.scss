@@ -41,39 +41,39 @@
 }
 
 .open{
-    animation: conditionalOpen .5s normal forwards ease-in-out;
+    animation: $open-top-left;
 }
 
 .close{
-    animation: conditionalClose .25s normal forwards ease-in-out;
+    animation: $close-top-left;
 
     *{
         display: none;
     }
 }
 
-@keyframes conditionalOpen {
+// @keyframes conditionalOpen {
     
-    from { 
-        transform-origin: left top;
-        transform: scaleY(0) 
-    }
-    to { 
-        transform-origin: left top;
-        transform: scaleY(1) 
-    }
-}
+//     from { 
+//         transform-origin: left top;
+//         transform: scaleY(0) 
+//     }
+//     to { 
+//         transform-origin: left top;
+//         transform: scaleY(1) 
+//     }
+// }
 
-@keyframes conditionalClose {
-    from { 
-        transform-origin: left top;
-        transform: scaleY(1) 
-    }
-    to { 
-        transform-origin: left top;
-        transform: scaleY(0) 
-    }
-}
+// @keyframes conditionalClose {
+//     from { 
+//         transform-origin: left top;
+//         transform: scaleY(1) 
+//     }
+//     to { 
+//         transform-origin: left top;
+//         transform: scaleY(0) 
+//     }
+// }
 
 
 .existing-tags-list{

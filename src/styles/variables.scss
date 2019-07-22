@@ -14,7 +14,57 @@ $yellow: #ffdd00;
 $light-yellow: #ffef00;
 
 $spin: spin 10s linear infinite;;
+$open-top-left: openTopLeft .5s normal forwards ease-in-out;
+$close-top-left: closeTopLeft .5s normal forwards ease-in-out;
+$open-right: openRight .25s normal forwards ease-in-out;
+$close-right: closeRight .25s normal forwards ease-in-out;
 
 @keyframes spin{
     100% {transform: rotate(360deg)}
+}
+
+@keyframes openTopLeft {
+    
+    from { 
+        transform-origin: left top;
+        transform: scaleY(0) 
+    }
+    to { 
+        transform-origin: left top;
+        transform: scaleY(1) 
+    }
+}
+
+@keyframes closeTopLeft {
+    from { 
+        transform-origin: left top;
+        transform: scaleY(1) 
+    }
+    to { 
+        transform-origin: left top;
+        transform: scaleY(0) 
+    }
+}
+
+@keyframes openRight {
+    
+    from { 
+        transform-origin: right top;
+        transform: scaleX(0) 
+    }
+    to { 
+        transform-origin: right top;
+        transform: scaleX(1) 
+    }
+}
+
+@keyframes closeRight {
+    from { 
+        transform-origin: right top;
+        transform: scaleX(1) 
+    }
+    to { 
+        transform-origin: right top;
+        transform: scaleX(0) 
+    }
 }
