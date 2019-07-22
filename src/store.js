@@ -5,7 +5,8 @@ import recentlyPlayedReducer from './reducers/recentlyPlayedReducer';
 import routingReducer from './reducers/routingReducer';
 import playlistReducer from './reducers/playlistReducer';
 import searchReducer from './reducers/searchReducer';
-import tagReducer from './reducers/tagReducer'
+import tagReducer from './reducers/tagReducer';
+import playerReducer from './reducers/playerReducer';
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     routing: routingReducer,
     playlists: playlistReducer,
     search: searchReducer,
-    tags: tagReducer
+    tags: tagReducer,
+    player: playerReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(promiseMiddleware));
