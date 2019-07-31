@@ -36,7 +36,6 @@ let TagItem = props => {
     const [isAdded, setAdded] = useState(props.isAdded)
     const [isPinned, setPinned] = useState(props.isPinned);
 
-    console.log(props.songTagItem);
     return(
         <div className='tag-item'>
             <p>#{props.songTagItem.tag_description}</p>

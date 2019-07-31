@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.player-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: $text-color;
+}

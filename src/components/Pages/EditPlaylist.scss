@@ -5,3 +5,29 @@
     width: 100%;
     overflow: none;
 }
+
+.construct-playlist-menu-container{
+    display: flex;
+    flex-direction: column;
+    color: $text-color;
+    border-top: 2px solid $text-color;
+}
+
+.construct-playlist-menu{
+    display: flex;
+    
+    button{
+        width: 50%;
+        background-color: $background-color;
+        color: $text-color;
+        height: 2em;
+        font-size: 1em;
+    }
+}
+
+.construct-playlist-menu-header{
+    background-color: $green;
+    color: #fff;
+    padding: .5em;
+    font-size: 1.25em;
+}

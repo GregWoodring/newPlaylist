@@ -91,18 +91,27 @@ module.exports = {
     },
     
     check_login: (req, res) => {
-            try{
-                if(req.session.user){
-                    res.send(true).status(200);
-                } else {
-                    res.send(false).status(200);
-                }
-            } catch(err){
-                console.log('hit catch')
-                res.send(err).status(500);
+        try{
+            if(req.session.user){
+                res.send(true).status(200);
+            } else {
+                res.send(false).status(200);
             }
-            
-                
+        } catch(err){
+            console.log('Error Checking Login:', err)
+            res.send(err).status(500);
         }
+        
+            
+    },
+
+    getAccessToken: (req, res) => {
+        try{
+            res.send(req.session.user.access_token).status(200);
+        } catch(err){
+            console.log('Error getting access token:', err);
+            res.send(err).status(500);
+        }
+    }
     
 }

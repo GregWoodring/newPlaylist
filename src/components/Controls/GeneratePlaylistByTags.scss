@@ -1,0 +1,24 @@
+@import '../../styles//variables.scss';
+
+.generate-playlist-by-tags{
+    color: $text-color;
+    display: flex;
+    flex-direction: column;
+    height: 58vh;
+    
+}
+
+.tag-selector{
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    overflow: scroll;
+    height: 35%;
+    width: 80%;
+}
+
+.tag-selector-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

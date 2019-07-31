@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeCurrentPlaylist } from '../../reducers/playlistReducer';
@@ -8,7 +8,7 @@ import './Sidebar.scss';
 let Sidebar = props => {
 
     return(
-        <div className={props.showSidebar ? 'sidebar' : 'hide'}>
+        <div className={props.showSidebar ? 'sidebar open-left' : 'hide'}>
             <ol>
                 <Link exact to='/main'><li onClick={() => props.changeCurrentPlaylist(null)}>Recently Played</li></Link>
                 <Link to='/main/playlists'><li onClick={() => props.changeCurrentPlaylist(null)}>Playlists</li></Link>

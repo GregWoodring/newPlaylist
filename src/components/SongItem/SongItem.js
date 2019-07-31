@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import convertDate from '../../functions/convertDate';
 import { addSongs } from '../../reducers/playlistReducer';
+import PlayPauseControl from '../Controls/PlayPauseControl';
+
 
 import './SongItem.scss'
 
@@ -13,6 +15,9 @@ let SongItem = props => {
             style={props.passedStyle}
             className="song-item"
             onClick={() => props.click ? props.click(props.song) : null}>
+            <div className='play-controls'>
+                <PlayPauseControl song={props.song} />
+            </div>
             <div className="song-info">
                 <div>               
                     <span

@@ -6,7 +6,6 @@
     color: $text-color;
     font-family: $font;
     display: flex;
-    justify-content: space-between;
     font-size: 10px;
     height: 4rem;
     border-bottom: 1px solid $text-color;
@@ -47,7 +46,7 @@
     display: flex;
     justify-content: flex-end;
     padding: .5em;
-    width: 35%;
+    width: 30%;
     //margin: .5em 1.5em;
 }
 
@@ -119,4 +118,12 @@
 
 .close-panel{
     animation: $close-right;
+}
+
+.play-controls{
+    width: 13%;;
+    background-color: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

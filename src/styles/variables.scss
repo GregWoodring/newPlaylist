@@ -18,6 +18,8 @@ $open-top-left: openTopLeft .5s normal forwards ease-in-out;
 $close-top-left: closeTopLeft .5s normal forwards ease-in-out;
 $open-right: openRight .25s normal forwards ease-in-out;
 $close-right: closeRight .25s normal forwards ease-in-out;
+$open-left: openLeft .35s normal forwards ease-in-out;
+$close-left: closeLeft .35s normal forwards ease-in-out;
 
 @keyframes spin{
     100% {transform: rotate(360deg)}
@@ -65,6 +67,28 @@ $close-right: closeRight .25s normal forwards ease-in-out;
     }
     to { 
         transform-origin: right top;
+        transform: scaleX(0) 
+    }
+}
+
+@keyframes openLeft {
+    from{
+        transform-origin: left top;
+        transform: scaleX(0) 
+    }
+    to { 
+        transform-origin: left top;
+        transform: scaleX(1) 
+    }
+}
+
+@keyframes closeLeft {
+    from{
+        transform-origin: left top;
+        transform: scaleX(1) 
+    }
+    to { 
+        transform-origin: left top;
         transform: scaleX(0) 
     }
 }

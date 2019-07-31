@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import AddTagButton from '../tools/AddTagButton';
 import PlaylistSongsControls from '../Controls/PlaylistSongsControls';
+import RecentlyPlayedControls from '../Controls/RecentlyPlayedControls';
 import './SongDisplay.scss'
 
 //will be passed a song on mount and will alter the song based on the current song
@@ -23,12 +24,19 @@ class SongDisplay extends Component{
         switch(this.props.control){
             case 'playlist-songs':
                 if(this.props.playlist){
-                    console.log('playlist: ', this.props.playlist)
                     return (
                         <PlaylistSongsControls
-                            
+                            song={this.props.currentSong}
                             playlist={this.props.playlist} />
                     );
+                }
+                break;
+            case 'recently-played-songs':
+                if(this.props.currentSong){
+                    return (
+                        <RecentlyPlayedControls
+                            song={this.props.currentSong}/>
+                    )
                 }
                 break;
             default:

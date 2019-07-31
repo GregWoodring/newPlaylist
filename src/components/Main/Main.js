@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../reducers/userReducer';
 import { importUserPlaylists } from '../../reducers/playlistReducer';
 import { getPinnedTags } from '../../reducers/tagReducer';
+import { getPlayer, setDeviceId, setCurrentlyPlaying } from '../../reducers/playerReducer';
+
 import { Switch, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
@@ -13,6 +15,7 @@ import RecentlyPlayed from '../Pages/RecentlyPlayed';
 import Playlists from '../Pages/Playlists';
 import PlaylistSongs from '../Pages/PlaylistSongs';
 import EditPlaylist from '../Pages/EditPlaylist';
+import PlayerFooter from '../Player/PlayerFooter';
 
 import './Main.scss';
 
@@ -41,8 +44,49 @@ class Main extends Component{
 
     // }
     componentDidMount(){
+        try{
         this.props.importUserPlaylists();
         this.props.getPinnedTags();
+
+        window.onSpotifyWebPlaybackSDKReady = async () => {
+            let token = await axios.get('/api/get_access_token');
+            token = token.data;
+            // eslint-disable-next-line no-undef
+            const player = new Spotify.Player({
+              name: 'New Playlist',
+              getOAuthToken: cb => { cb(token); }
+            });
+      
+            // Error handling
+            player.addListener('initialization_error', ({ message }) => { console.error(message); });
+            player.addListener('authentication_error', ({ message }) => { console.error(message); });
+            player.addListener('account_error', ({ message }) => { console.error(message); });
+            player.addListener('playback_error', ({ message }) => { console.error(message); });
+      
+            // Playback status updates
+            player.addListener('player_state_changed', state => { 
+                console.log(state);
+                //this.props.setCurrentlyPlaying(state.context.uri)
+             });
+      
+            // Ready
+            player.addListener('ready', ({ device_id }) => {
+              this.props.setDeviceId(device_id);
+            });
+      
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+              console.log('Device ID has gone offline', device_id);
+            });
+      
+            // Connect to the player!
+            player.connect();
+            
+            this.props.getPlayer(player);
+          };
+        } catch(err){
+            console.log('Error in Component Will Mount Main: ', err);
+        }
     }
 
     render(){
@@ -58,9 +102,7 @@ class Main extends Component{
                         <Route path='/main/edit_playlist/:playlist_id' component={EditPlaylist} />
                         <Route path='/main/edit_playlist' component={EditPlaylist} />
                     </Switch>
-                    <footer>
-                        {/* Will someday be song player*/}
-                    </footer>
+                    <PlayerFooter />
                 </div>
             </div>
         )
@@ -78,4 +120,10 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { loginUser, importUserPlaylists, getPinnedTags })(Main);
+export default connect(mapStateToProps, { 
+    loginUser, 
+    importUserPlaylists, 
+    getPinnedTags, 
+    getPlayer, 
+    setDeviceId,
+    setCurrentlyPlaying })(Main);

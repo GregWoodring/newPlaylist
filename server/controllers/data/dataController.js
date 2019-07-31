@@ -186,9 +186,24 @@ module.exports = {
             res.send(pagingObj).status(200);
         } catch(err){
             console.log(err);
-            res.send(err);
+            res.send(err).status(500);
         }
-    }
+    },
+
+    getUsersTags: async (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+
+            let data = await db.get_user_tags(user.userid);
+            res.send(data).status(200);
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
+    },
+
+    
 
     
     

@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.control-container{
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    border: 2px solid $text-color;
+    margin: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-container:hover{
+    border-color: $light-green;
+    color: $light-green;
+
+}

@@ -26,6 +26,7 @@ class RecentlyPlayed extends Component{
                 <div>
                         <SongDisplay 
                             currentSong={this.props.currentSong}
+                            control={'recently-played-songs'}
                         />
                         <SongList 
                             list={this.props.recentlyPlayed}
