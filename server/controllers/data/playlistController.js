@@ -327,7 +327,24 @@ module.exports = {
 
 
 
-    }
+    },
+
+    removeSongsLocal: (req, res) => {
+        try{
+            let db = req.app.get('db');
+            let user = req.session.user;
+            let playlistId = req.params.playlist_id;
+            let songsArr = req.body.songsArr;
+
+            let data = db.remove_songs_from_playlist(user.userid, playlistId, songsArr);
+
+            res.send(data).status(200);
+            
+        } catch(err){
+            console.log('Error in removeSongsLocal: ', err);
+            res.send(err).status(500);
+        }
+    },
 
 
     // postPlaylistImage: async (req, res) => {

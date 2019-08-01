@@ -63,8 +63,21 @@ let SyncPlaylist = props => {
                             </p>
                         )
                     })}
-
+                    <button
+                    onClick={() => {
+                        setShowModal(false);
+                    }}
+                    className='create-button'
+                >Sync To Spotify</button>
+                <button
+                    onClick={() => {
+                        setShowModal(false);
+                    }}
+                    className='create-button'
+                >Sync To New Playlist</button>
                 </div> : null}
+
+                
         </div>
     )
 }
