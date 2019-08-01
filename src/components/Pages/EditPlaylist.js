@@ -19,7 +19,7 @@ class EditPlaylist extends Component{
             playlist_name: '',
             image_url: '',
             song_search: '',
-            generate_menu: 'search'
+            generate_menu: 'by-tag'
         }
     }
 

@@ -12,92 +12,108 @@ class GeneratePlaylistByTags extends Component{
 
         this.state = {
             includeList: [],
-            excludeList: []
+            excludeList: [],
+            userTagsLocal: [],
+            includePanal: 'open',
+            excludePanal: 'open',
+            filterTextIncludes: '',
+            filterTextExcludes: ''
         }
 
         this.props.getUserTags()
+    }
+
+    componentWillUpdate(){
+        
+    }
+
+    renderTags = (type) => {
+        return(
+            this.props.userTags.filter(item => {
+                return item.tag_description.includes(type === 'includes' ? this.state.filterTextIncludes : this.state.filterTextExcludes);
+            }).map(item => {
+                return (
+                <div className='tag-selector-item' 
+                    key={item.tag_id}
+                >
+                    <input className='select-checkbox' type='checkbox' onClick={() => {
+                        let index = this.state.includeList.findIndex(tag => {
+                            return item.tag_id === tag
+                        })
+                        if(index >= 0){
+                            let newList = [...this.state.includeList]
+                                newList.splice(index, 1);
+                            this.setState({includeList: newList});
+                        } else {
+                            this.setState({includeList: [item.tag_id, ...this.state.includeList]});
+                        }
+                        console.log(this.state.includeList);
+                    }
+                    } />
+                    <div>
+                        <p>
+                            #{item.tag_description}
+                        </p>
+                        <p>
+                            {item.songs_tagged}
+                        </p>
+                    </div>
+                </div>)
+            })
+        )
     }
     
     render(){
         return (
             <div className='generate-playlist-by-tags'>
-                <h3>Include Tags </h3>
-                <div className='tag-selector'>
-                    <div>
-                        {this.props.userTags.map(item => {
-                            return (
-                            <div className='tag-selector-item'
-                                key={item.tag_id}
-                            >
-                                <input type='checkbox' onClick={() => {
-                                    let index = this.state.includeList.findIndex(tag => {
-                                        return item.tag_id === tag
-                                    })
-                                    if(index >= 0){
-                                        let newList = [...this.state.includeList]
-                                            newList.splice(index, 1);
-                                        this.setState({includeList: newList});
-                                    } else {
-                                        this.setState({includeList: [item.tag_id, ...this.state.includeList]});
-                                    }
-                                    console.log(this.state.includeList);
-                                }
-                                } />
-                                <p>
-                                    {item.tag_description}
-                                </p>
-                                <p>
-                                    {item.songs_tagged}
-                                </p>
-                            </div>)
-                        })}
+                <div className='generate-playlist-panal '>
+                    <h3
+                        // onClick={() => this.setState({includePanal: (this.state.includePanal === 'open') ? 'close' : 'open'})}
+                    >Include Tags 
+                    
+                        <input 
+                            type='text' 
+                            className='filter-input' 
+                            placeholder='Search Tags'
+                            onClick={e => e.stopPropagation} 
+                            onChange={e => this.setState({filterTextIncludes: e.target.value})}/>
+                    </h3>
+                    <div className={'tag-selector '  + this.state.includePanal}>
+                        <div>
+                            {this.renderTags('includes')}
+                            
+                        </div>
                     </div>
                 </div>
-
-                <h3>Exclude Tags </h3>
-                <div className='tag-selector'>
+                
+                <div className={'generate-playlist-panal '}>
+                    <h3
+                       // onClick={() => this.setState({excludePanal: this.state.excludePanal === 'open'  ? 'close' : 'open'})}
+                    >Exclude Tags 
+                        <input 
+                            type='text' 
+                            className='filter-input' 
+                            placeholder='Search Tags'
+                            onClick={e => e.stopPropagation} 
+                            onChange={e => this.setState({filterTextExcludes: e.target.value})}/>
+                    </h3>
                     
-                    <div>
-                        {this.props.userTags.map(item => {
-                            return (
-                                <div 
-                                    className='tag-selector-item'
-                                    key={item.tag_id}
-                                >
-                                    <input type='checkbox' onClick={() => {
-                                        let index = this.state.excludeList.findIndex((tag, index) => {
-                                            return +item.tag_id === +tag
-                                        })
-                                        
-
-                                        if(index >= 0){
-                                            let newList = [...this.state.excludeList]
-                                            newList.splice(index, 1);
-                                            this.setState({excludeList: newList})
-                                        } else {
-                                            this.setState({excludeList: [item.tag_id, ...this.state.excludeList]});
-                                        }
-                                        console.log(this.state.excludeList);
-                                    }
-                                    } />
-                                    <p>
-                                        {item.tag_description}
-                                    </p>
-                                    <p>
-                                        {item.songs_tagged}
-                                    </p>
-                                </div>)
-                            })}
+                    <div className={'tag-selector '  + this.state.excludePanal}> 
+                        <div>
+                            {this.renderTags('excludes')}
+                            </div>
                         </div>
                     </div>
                     
-                    <button onClick={() => {
+                    <button 
+                        className='create-button'
+                        onClick={() => {
                         axios.post(`/api/add_songs_by_id/${this.props.playlistId}`, {
                             includeList: this.state.includeList,
                             excludeList: this.state.excludeList
                         })
                     }}>
-                        New Playlist
+                        Add Songs by Tag
                     </button>
             </div>
         )

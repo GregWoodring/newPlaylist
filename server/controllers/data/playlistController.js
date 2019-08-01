@@ -78,8 +78,8 @@ module.exports = {
             //    it seems that errors won't get pushed to the console unless massive is assigning
             //    the return value from the database to something 
             let songID = await db.import_playlist_tracks(returnObj[0].playlist_id, JSON.stringify(items));
-            let check_sync = await db.check_playlist_sync(+playlist_id, JSON.stringify(items));
-            res.send(check_sync[0].check_playlist_sync).status(200);
+            let check_sync = await db.check_playlist_sync_with_differences(+playlist_id, JSON.stringify(items));
+            res.send(check_sync).status(200);
 
         } catch(err){
             console.log('Problem importing playlist tracks:', err);

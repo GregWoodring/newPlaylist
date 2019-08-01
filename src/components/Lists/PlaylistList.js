@@ -27,23 +27,36 @@ class PlaylistList extends Component{
         this.props.history.push(`/main/playlists/${playlist.playlist_id}`);
     }
 
-    renderRow = ({index, key, style, parent}) => {
-        return (
-            <CellMeasurer 
+    // renderRow = ({index, key, style, parent}) => {
+    //     return (
+    //         <CellMeasurer 
                 
-                key={key}
-                cache={this.cache}
-                parent={parent}
-                columnIndex={0}
-                rowIndex={index}>
-                    <PlaylistItem
-                        playlist={this.props.list[index]}
-                        passedStyle={style}
+    //             key={key}
+    //             cache={this.cache}
+    //             parent={parent}
+    //             columnIndex={0}
+    //             rowIndex={index}>
+    //                 <PlaylistItem
+    //                     playlist={this.props.list[index]}
+    //                     passedStyle={style}
+    //                     click={this.openPlaylist}
+    //                     syncing={this.props.syncing}
+    //                 />
+    //         </CellMeasurer>
+    //     )
+    // }
+
+    renderRow = () => {
+        return this.props.list.map(item => {
+            return(
+                <PlaylistItem
+                        playlist={item}
+                        //passedStyle={style}
                         click={this.openPlaylist}
                         syncing={this.props.syncing}
                     />
-            </CellMeasurer>
-        )
+            )
+        })
     }
 
     
@@ -54,7 +67,8 @@ class PlaylistList extends Component{
             
             <div className='playlist-list'>
                 
-                <AutoSizer>
+                {this.renderRow()}
+                {/* <AutoSizer>
                     {
                         ({width, height}) =>
                         {
@@ -73,7 +87,7 @@ class PlaylistList extends Component{
                         }
                     }
 
-                </AutoSizer>
+                </AutoSizer> */}
             </div>
         )
     }
