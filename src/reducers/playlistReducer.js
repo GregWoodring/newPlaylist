@@ -13,7 +13,7 @@ let initialState = {
 }
 
 export default function reducer(state = initialState, action){
-    let { type, payload } = action;
+    let { type, payload, meta } = action;
     let index = 0;
     let newList = [];
 
@@ -54,6 +54,11 @@ export default function reducer(state = initialState, action){
         case SYNC_PLAYLIST + '_FULFILLED':
             console.log('should stop')
             return {...state, syncing: false, playlistList: payload.data}
+        case UPDATE_SONG_TAGS:
+            
+            let newSongList = [...state.playlistSongsList]
+            newSongList[newSongList.findIndex(item => +item.song_id === +meta)].tags_arr = payload;
+            return {...state, playlistSongsList: newSongList}
         default:
             return state;
     }
@@ -69,6 +74,7 @@ const CREATE_NEW_PLAYLIST = 'CREATE_NEW_PLAYLIST';
 const POST_PLAYLIST_IMAGE = 'POST_PLAYLIST_IMAGE';
 const ADD_SONGS = 'ADD_SONGS';
 const SYNC_PLAYLIST = 'SYNC_PLAYLISTS';
+const UPDATE_SONG_TAGS = 'UPDATE_SONG_TAGS';
 
 export const importUserPlaylists = () => {
     let data = axios.get('/api/import_playlists');
@@ -157,5 +163,13 @@ export const addSongs = (playlistId, songsArr) => {
     return{
         type: ADD_SONGS,
         payload: data
+    }
+}
+
+export const updatePlaylistSongTags = (songId, tagsArr) =>{
+    return {
+        payload: tagsArr,
+        type: UPDATE_SONG_TAGS,
+        meta: songId
     }
 }

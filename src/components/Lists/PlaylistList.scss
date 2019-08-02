@@ -5,3 +5,24 @@
     width: 100%;
     overflow: auto;
 }
+
+
+.playlist-search-container{
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filter-input{
+    border: 1px solid $text-color;
+    border-radius: 10px;
+    background-color: $transparent-background-color;
+    padding: .5em;
+    padding-left: 1em;
+    margin: 0 .5em;
+    color: #fff;
+}
+
+.filter-input::placeholder{
+    text-align: center;
+}

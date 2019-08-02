@@ -10,7 +10,7 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, action){
-    let { type, payload } = action;
+    let { type, payload, meta } = action;
 
     switch(type){
         case GET_CURRENT_SONG:
@@ -25,6 +25,10 @@ export default function reducer(state = initialState, action){
                 }
         case CHANGE_CURRENT_SONG:
             return {...state, currentSong: payload}
+        case UPDATE_RP_SONG_TAGS:
+            let newRecentlyPlayedList = [...state.recentlyPlayed];
+            newRecentlyPlayedList[newRecentlyPlayedList.findIndex(item => +item.song_id === +meta)].tags_arr = payload;
+            return {...state, recentlyPlayed: newRecentlyPlayedList }
         default:
             return state;
     }
@@ -33,6 +37,7 @@ export default function reducer(state = initialState, action){
 const GET_RECENTLY_PLAYED = 'GET_RECENTLY_PLAYED';
 const GET_CURRENT_SONG = 'GET_CURRENT_SONG';
 const CHANGE_CURRENT_SONG = 'CHANGE_CURRENT_SONG';
+const UPDATE_RP_SONG_TAGS = 'UPDATE_RP_SONG_TAGS';
 
 export const getCurrentSong = song => {
     return {
@@ -55,5 +60,13 @@ export const changeCurrentSong = song => {
     return {
         type: CHANGE_CURRENT_SONG,
         payload: song
+    }
+}
+
+export const updateRecentlyPlayedTags = (songId, tagsArr) =>{
+    return {
+        payload: tagsArr,
+        type: UPDATE_RP_SONG_TAGS,
+        meta: songId
     }
 }

@@ -34,7 +34,8 @@ let CurrentTagList = props => {
 
 function mapStateToProps(state){
     return{
-        pinnedTags: state.tags.pinnedTags
+        pinnedTags: state.tags.pinnedTags,
+        songList: state.playlist.playlistSongsList
     }
 }
 

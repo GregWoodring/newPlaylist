@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { changePageHeader } from '../../reducers/routingReducer';
 import { changeCurrentPlaylist, syncPlaylist } from '../../reducers/playlistReducer';
 
-import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
-
 import PlaylistItem from '../ListItems/PlaylistItem';
 
 import './PlaylistList.scss';
@@ -14,10 +12,9 @@ class PlaylistList extends Component{
     constructor(props){
         super(props);
 
-        this.cache = new CellMeasurerCache({
-            fixedWidth: true,
-            defaultHeight: 100
-        });
+        this.state = {
+            filterText: ''
+        }
     }
 
     
@@ -27,31 +24,15 @@ class PlaylistList extends Component{
         this.props.history.push(`/main/playlists/${playlist.playlist_id}`);
     }
 
-    // renderRow = ({index, key, style, parent}) => {
-    //     return (
-    //         <CellMeasurer 
-                
-    //             key={key}
-    //             cache={this.cache}
-    //             parent={parent}
-    //             columnIndex={0}
-    //             rowIndex={index}>
-    //                 <PlaylistItem
-    //                     playlist={this.props.list[index]}
-    //                     passedStyle={style}
-    //                     click={this.openPlaylist}
-    //                     syncing={this.props.syncing}
-    //                 />
-    //         </CellMeasurer>
-    //     )
-    // }
 
     renderRow = () => {
-        return this.props.list.map(item => {
+        return this.props.list.filter(item => {
+            return item.playlist_name ? item.playlist_name.toLowerCase().includes(this.state.filterText) : false;
+        }).map(item => {
             return(
                 <PlaylistItem
+                        key={item.playlist_id}
                         playlist={item}
-                        //passedStyle={style}
                         click={this.openPlaylist}
                         syncing={this.props.syncing}
                     />
@@ -66,28 +47,14 @@ class PlaylistList extends Component{
         return(
             
             <div className='playlist-list'>
-                
+                <div className='playlist-search-container'>
+                    <input 
+                        type='text' 
+                        placeholder='Search Playlists' 
+                        className='filter-input'
+                        onChange={e => this.setState({filterText: e.target.value})} />
+                </div>
                 {this.renderRow()}
-                {/* <AutoSizer>
-                    {
-                        ({width, height}) =>
-                        {
-                            console.log(width, height)
-                            return (
-                                <List
-                                    width={width}
-                                    height={height}
-                                    rowHeight={this.cache.rowHeight}
-                                    rowRenderer={this.renderRow}
-                                    rowCount={this.props.list.length} 
-                                    overscanRowCount={20}
-                                    
-                                /> 
-                            )
-                        }
-                    }
-
-                </AutoSizer> */}
             </div>
         )
     }

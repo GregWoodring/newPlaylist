@@ -53,13 +53,13 @@ module.exports = {
             if(!regex.test(tagDescription))
                 throw new Error('Invalid input for tagDescription')
 
-            await db.insert_song_tag(
+            let data = await db.insert_song_tag(
                 tagDescription,
                 songId,
                 userId
             )
 
-            res.sendStatus(200);
+            res.send(data).status(200);
         } catch(err){
             console.log('Error adding song tag: ' + err)
             res.send(err).status(500);

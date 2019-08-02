@@ -278,24 +278,27 @@ module.exports = {
 
             let songsArr = req.body.songsArr;
             let playlistId = req.body.playlistId;
+            let skipImport = req.body.skipImport;
 
             let uris = songsArr.map((item, index) => item.spotify_uri);
-            await songsArr.forEach(async (item, index) => {
-                //Songs from search are not imported automatically due to space concerns, they will not have a property
-                //song_id and will have an original. This will import the song and set the object in the songs array to be
-                //what was originally sent from spotify, for importing purposes.
-                
-                if(!item.song_id && item.original){
-                    songsArr[index] = {track: songsArr[index].original};
-                    await db.import_song(JSON.stringify(item.original)).then(res => {
-                        console.log('hit this')
-                        
-                    }).catch(err => {
-                        throw new Error(`Error importing song ${songsArr[index].song_name}. Error: ${err}`);
-                    });
-                }
+            if(!skipImport){
+                await songsArr.forEach(async (item, index) => {
+                    //Songs from search are not imported automatically due to space concerns, they will not have a property
+                    //song_id and will have an original. This will import the song and set the object in the songs array to be
+                    //what was originally sent from spotify, for importing purposes.
+                    
+                    if(!item.song_id && item.original){
+                        songsArr[index] = {track: songsArr[index].original};
+                        await db.import_song(JSON.stringify(item.original)).then(res => {
+                            console.log('hit this')
+                            
+                        }).catch(err => {
+                            throw new Error(`Error importing song ${songsArr[index].song_name}. Error: ${err}`);
+                        });
+                    }
 
-            })
+                })
+            }
 
 
 
@@ -314,11 +317,15 @@ module.exports = {
 
             let response = await axios(requestObj);
 
-            db.import_playlist_tracks(playlistId, JSON.stringify(songsArr)).then(dbRes => {
-                res.sendStatus(201);
-            }).catch(err => {
-                throw new Error(`Error importing playlist tracks after posting to spotify Error: ${err}`);
-            });
+            if(!skipImport){
+                db.import_playlist_tracks(playlistId, JSON.stringify(songsArr)).then(dbRes => {
+                    res.sendStatus(201);
+                }).catch(err => {
+                    throw new Error(`Error importing playlist tracks after posting to spotify Error: ${err}`);
+                });
+            } else {
+                res.sendStatus(200);
+            }
 
         } catch(err){
             console.log('Error adding tracks to playlist Error: ' + err);
@@ -329,15 +336,13 @@ module.exports = {
 
     },
 
-    removeSongsLocal: (req, res) => {
+    removeSongsLocal: async (req, res) => {
         try{
             let db = req.app.get('db');
             let user = req.session.user;
             let playlistId = req.params.playlist_id;
             let songsArr = req.body.songsArr;
-
-            let data = db.remove_songs_from_playlist(user.userid, playlistId, songsArr);
-
+            let data = await db.remove_songs_from_playlist(user.userid, playlistId, songsArr);
             res.send(data).status(200);
             
         } catch(err){

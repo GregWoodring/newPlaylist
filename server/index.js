@@ -64,6 +64,8 @@ app.put('/api/edit_playlist/:playlist_id', authMiddleware.userOnly, authMiddlewa
 app.post('/api/post_playlist_image/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.postPlaylistImage);
 app.post('/api/add_song_to_playlist',  authMiddleware.userOnly, authMiddleware.reAuth, playlistController.addSongsToPlaylist);
 app.post('/api/add_songs_by_id/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.generatePlaylistByTags);
+app.post('/api/remove_songs_local/:playlist_id', authMiddleware.userOnly, authMiddleware.reAuth, playlistController.removeSongsLocal);
+
 //Tags and Pins
 app.post('/api/song_tag', authMiddleware.userOnly, authMiddleware.reAuth, dataController.addSongTag);
 app.get('/api/song_tag/:song_id', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getSongTags);

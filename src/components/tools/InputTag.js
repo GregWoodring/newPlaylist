@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
+import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
 
 
 import './InputTag.scss';
@@ -28,6 +31,13 @@ let InputTag = props => {
                         axios.post('/api/song_tag', {
                             tagDescription: tag,
                             songId: props.songId
+                        }).then(res =>{
+                            if(props.pageHeader === 'Recently Played'){
+                                props.updateRecentlyPlayedTags(props.songId, res.data) 
+
+                            } else {
+                                props.updatePlaylistSongTags(props.songId, res.data);
+                            }
                         })
                     }
                 }}
@@ -36,4 +46,10 @@ let InputTag = props => {
     )
 }
 
-export default InputTag;
+function mapStateToProps(state){
+    return {
+        pageHeader: state.routing.pageHeader
+    }
+}
+
+export default connect(mapStateToProps, { updatePlaylistSongTags, updateRecentlyPlayedTags })(InputTag);

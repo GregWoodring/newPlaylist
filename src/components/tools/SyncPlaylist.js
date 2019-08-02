@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios'
 
-import { getUserPlaylists } from '../../reducers/playlistReducer';
+import { getUserPlaylists, getPlaylistSongs } from '../../reducers/playlistReducer';
 import { connect } from 'react-redux';
 
 import './SyncPlaylist.scss'
@@ -21,6 +21,7 @@ let SyncPlaylist = props => {
     return(
         <div className={type}>
             <button
+                className='fetch-button'
                 onClick={() => {
                     setType(syncing);
                     axios.get(`/api/sync_playlist/${props.playlistId}`).then(res => {
@@ -66,14 +67,27 @@ let SyncPlaylist = props => {
                     <button
                     onClick={() => {
                         setShowModal(false);
+                        axios.post(`/api/remove_songs_local/${props.playlistId}`, {
+                            songsArr: localSongs.map(item => item.song_id)
+                        }).then(res => {
+                            props.getPlaylistSongs(props.playlistId);
+                            setType(synced);
+                        });
                     }}
-                    className='create-button'
+                    className='green-button'
                 >Sync To Spotify</button>
                 <button
                     onClick={() => {
                         setShowModal(false);
+                        axios.post('/api/add_song_to_playlist', {
+                            songsArr: localSongs,
+                            playlistId: props.playlistId,
+                            skipImport: true
+                        }).then(res => {
+                            setType(synced);
+                        });
                     }}
-                    className='create-button'
+                    className='green-button'
                 >Sync To New Playlist</button>
                 </div> : null}
 
@@ -82,4 +96,4 @@ let SyncPlaylist = props => {
     )
 }
 
-export default connect(null, { getUserPlaylists })(SyncPlaylist);
+export default connect(null, { getUserPlaylists, getPlaylistSongs })(SyncPlaylist);

@@ -4,6 +4,8 @@ import { faPlus, faMinus, faThumbtack } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { updatePinnedTags } from '../../reducers/tagReducer';
+import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
+import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
 
 import './TagItem.scss';
 /*
@@ -60,6 +62,13 @@ let TagItem = props => {
                                     songId: props.songId
                                 }).then(res => {
                                     //console.log(res); -- Need to update in reducer from here, use reducer function in this spot
+                                    console.log(props.pageHeader === 'Recently Played')
+                                    if(props.pageHeader === 'Recently Played'){
+                                        props.updateRecentlyPlayedTags(props.songId, res.data) 
+
+                                    } else {
+                                        props.updatePlaylistSongTags(props.songId, res.data);
+                                    }
                                     setAdded(true)})
                                 .catch(err =>  console.log(err));
 
@@ -101,4 +110,10 @@ let TagItem = props => {
     )
 }
 
-export default connect(null, { updatePinnedTags })(TagItem)
+function mapStateToProps(state){
+    return{
+        pageHeader: state.routing.pageHeader
+    }
+}
+
+export default connect(mapStateToProps, { updatePinnedTags, updatePlaylistSongTags, updateRecentlyPlayedTags })(TagItem)

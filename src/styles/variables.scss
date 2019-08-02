@@ -23,6 +23,9 @@ $close-left: closeLeft .35s normal forwards ease-in-out;
 $fade-in: fadeIn .5s normal forwards ease-in-out;
 $fade-out: fadeOut .5s normal forwards ease-in-out;
 
+
+
+
 @keyframes spin{
     100% {transform: rotate(360deg)}
 }
