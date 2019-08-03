@@ -203,7 +203,30 @@ module.exports = {
         }
     },
 
-    
+    getCurrentPlayback: async (req, res) => {
+        try{
+            let user = req.session.user;
+
+            let url = 'https://api.spotify.com/v1/me/player';
+            let requestObj = {
+                url,
+                method: 'GET',
+                headers: {
+                    'Authorization' : `Bearer ${user.access_token}`
+                }
+            }
+
+            let data = await axios(requestObj);
+            res.send({
+                song: cleanSongItem(data.data.item),
+                play:  data.data.is_playing
+            }).status(200);
+
+        } catch(err){
+            console.log(err);
+            res.send(err).status(500);
+        }
+    }
 
     
     
@@ -212,24 +235,7 @@ module.exports = {
 function cleanSearchResults(data){
     try{
         let items = data.data.tracks.items;
-        items = items.map(item => {
-            let obj = {};
-            obj.song_name = item.name;
-            obj.images_arr = item.album.images;
-            obj.release_date = item.album.release_date;
-            obj.artist_names = '';
-            item.artists.forEach((artist, index) => {
-                if(+item.artists.length -1 === +index){
-                    obj.artist_names += artist.name;
-                } else {
-                    obj.artist_names += artist.name + ', ';
-                }
-            });
-            obj.album_name = item.album.name;
-            obj.spotify_uri = item.uri;
-            obj.original = item;
-            return obj;
-        });
+        items = items.map(item => cleanSongItem(item));
 
         return {
             items,
@@ -239,6 +245,29 @@ function cleanSearchResults(data){
             offset: data.data.tracks.offset,
             total: data.data.tracks.total
         }
+    } catch(err){
+        throw err;
+    }
+}
+
+function cleanSongItem(item){
+    try{
+        let obj = {};
+        obj.song_name = item.name;
+        obj.images_arr = item.album.images;
+        obj.release_date = item.album.release_date;
+        obj.artist_names = '';
+        item.artists.forEach((artist, index) => {
+            if(+item.artists.length -1 === +index){
+                obj.artist_names += artist.name;
+            } else {
+                obj.artist_names += artist.name + ', ';
+            }
+        });
+        obj.album_name = item.album.name;
+        obj.spotify_uri = item.uri;
+        obj.original = item;
+        return obj;
     } catch(err){
         throw err;
     }

@@ -2,16 +2,16 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { setCurrentlyPlaying } from '../../reducers/playerReducer';
+import { getCurrentlyPlaying } from '../../reducers/playerReducer';
 import axios from 'axios';
 
 import './PlayPauseControl.scss';
 
 let PlayPauseControl = props => {
-    //console.log(props.currentlyPlayingURI)
     return(
     <div className='control-container' style={props.passedStyle ? props.passedStyle : {}}>
-        {props.currentlyPlayingURI === props.song.spotify_uri ? 
+        {((props.currentlyPlayingURI === props.song.spotify_uri)
+            && props.isPlaying) ? 
         <FontAwesomeIcon icon={faPause} 
             onClick={async () => {
                 let token = await axios.get('/api/get_access_token');
@@ -26,7 +26,7 @@ let PlayPauseControl = props => {
                     }
                 }
                 axios(requestObj);
-                props.setCurrentlyPlaying(null);
+                props.getCurrentlyPlaying();
             }}
         />
         :
@@ -46,7 +46,7 @@ let PlayPauseControl = props => {
                     }
                 }
                 axios(requestObj);
-                props.setCurrentlyPlaying(props.song.spotify_uri);
+                props.getCurrentlyPlaying();
                 
             }}
         />
@@ -57,10 +57,11 @@ let PlayPauseControl = props => {
 
 function mapStateToProps(state){
     return {
-        currentlyPlayingURI: state.player.currentlyPlayingURI,
+        currentlyPlayingURI: state.player.currentlyPlayingSong ? state.player.currentlyPlayingSong.spotify_uri : null,
         player: state.player.player,
-        deviceId: state.player.deviceId
+        deviceId: state.player.deviceId,
+        isPlaying: state.player.isPlaying
     }
 }
 
-export default connect(mapStateToProps, { setCurrentlyPlaying })(PlayPauseControl);
+export default connect(mapStateToProps, { getCurrentlyPlaying })(PlayPauseControl);

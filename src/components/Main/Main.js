@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../reducers/userReducer';
 import { importUserPlaylists } from '../../reducers/playlistReducer';
 import { getPinnedTags } from '../../reducers/tagReducer';
-import { getPlayer, setDeviceId, setCurrentlyPlaying } from '../../reducers/playerReducer';
+import { getPlayer, 
+        setDeviceId, 
+        getCurrentlyPlaying,
+        setDeviceOnline } from '../../reducers/playerReducer';
 
 import { Switch, Route } from 'react-router-dom';
 
@@ -66,17 +69,20 @@ class Main extends Component{
             // Playback status updates
             player.addListener('player_state_changed', state => { 
                 console.log(state);
+                this.props.getCurrentlyPlaying();
                 //this.props.setCurrentlyPlaying(state.context.uri)
              });
       
             // Ready
             player.addListener('ready', ({ device_id }) => {
-              this.props.setDeviceId(device_id);
+                this.props.setDeviceOnline(true);
+                this.props.setDeviceId(device_id);
             });
       
             // Not Ready
             player.addListener('not_ready', ({ device_id }) => {
-              console.log('Device ID has gone offline', device_id);
+                this.props.setDeviceOnline(false);
+                console.log('Device ID has gone offline', device_id);
             });
       
             // Connect to the player!
@@ -126,4 +132,5 @@ export default connect(mapStateToProps, {
     getPinnedTags, 
     getPlayer, 
     setDeviceId,
-    setCurrentlyPlaying })(Main);
+    getCurrentlyPlaying,
+    setDeviceOnline })(Main);

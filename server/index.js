@@ -48,6 +48,7 @@ app.get('/api/get_access_token', authMiddleware.userOnly, authMiddleware.reAuth,
 
 //Recently Played
 app.get('/api/recently_played', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getRecentlyPlayed);
+app.get('/api/get_current_playback', authMiddleware.userOnly, authMiddleware.reAuth, dataController.getCurrentPlayback);
 
 //Search
 app.get('/api/search_songs/:text', authMiddleware.userOnly, authMiddleware.reAuth, dataController.searchSongs);
