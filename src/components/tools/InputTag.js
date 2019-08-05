@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
-import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
+// import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
+// import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
 
 
 import './InputTag.scss';
@@ -32,12 +32,12 @@ let InputTag = props => {
                             tagDescription: tag,
                             songId: props.songId
                         }).then(res =>{
-                            if(props.pageHeader === 'Recently Played'){
-                                props.updateRecentlyPlayedTags(props.songId, res.data) 
+                            // if(props.pageHeader === 'Recently Played'){
+                            //     props.updateRecentlyPlayedTags(props.songId, res.data) 
 
-                            } else {
-                                props.updatePlaylistSongTags(props.songId, res.data);
-                            }
+                            // } else {
+                            //     props.updatePlaylistSongTags(props.songId, res.data);
+                            // }
                         })
                     }
                 }}
@@ -46,10 +46,10 @@ let InputTag = props => {
     )
 }
 
-function mapStateToProps(state){
-    return {
-        pageHeader: state.routing.pageHeader
-    }
-}
+// function mapStateToProps(state){
+//     return {
+//         pageHeader: state.routing.pageHeader
+//     }
+// }
 
-export default connect(mapStateToProps, { updatePlaylistSongTags, updateRecentlyPlayedTags })(InputTag);
+export default connect(null)(InputTag);

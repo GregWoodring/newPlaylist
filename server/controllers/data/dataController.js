@@ -85,6 +85,9 @@ module.exports = {
             let db = req.app.get('db');
             let { song_id : songId } = req.params;
             let userId = 1 //req.session.user.userid;
+            if(!songId){
+                
+            }
 
             let data = await db.get_song_tags(
                 songId,
@@ -206,6 +209,7 @@ module.exports = {
     getCurrentPlayback: async (req, res) => {
         try{
             let user = req.session.user;
+            let db = req.app.get('db');
 
             let url = 'https://api.spotify.com/v1/me/player';
             let requestObj = {
@@ -217,9 +221,13 @@ module.exports = {
             }
 
             let data = await axios(requestObj);
+            let [song] = await db.get_or_import_song(JSON.stringify(data.data.item));
+            // song = song.data;
+            console.log(song)
             res.send({
-                song: cleanSongItem(data.data.item),
-                play:  data.data.is_playing
+                song,
+                play:  data.data.is_playing,
+                deviceId: data.data.device.id
             }).status(200);
 
         } catch(err){

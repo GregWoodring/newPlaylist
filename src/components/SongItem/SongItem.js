@@ -37,9 +37,9 @@ let SongItem = props => {
             {props.song.played_at ? 
             <div className="play-info">
                 {convertDate(props.song.played_at)}
-            </div> : null
+            </div> : <div className="play-info"></div>
             }
-            {
+            {/* {
                 props.hideControls ? null :
             <div className="controls">
                 <div 
@@ -51,11 +51,7 @@ let SongItem = props => {
                 </div>
                 <div className={controlsClass}>
                     <ul>
-                        <li className={props.currentPlaylist && props.currentPlaylist.playlist_id ? '' : 'hide'}>
-                            <button onClick={() => addSongs(props.currentPlaylist.playlist_id, [props.song])}>
-                                Add
-                            </button>
-                        </li>
+                        
                         <li>
                             <button>
                                 Select Playlist to Add
@@ -64,6 +60,13 @@ let SongItem = props => {
                     </ul>
                 </div>
             </div>
+            } */}{
+                props.hideControls ?  null :
+                <div className={props.currentPlaylist && props.currentPlaylist.playlist_id ? 'add-song-button' : 'hide'}>
+                    <button onClick={() => addSongs(props.currentPlaylist.playlist_id, [props.song])}>
+                        Add
+                    </button>
+                </div>
             }
         </div>
     )

@@ -52,7 +52,7 @@ class PlaylistList extends Component{
                         type='text' 
                         placeholder='Search Playlists' 
                         className='filter-input'
-                        onChange={e => this.setState({filterText: e.target.value})} />
+                        onChange={e => this.setState({filterText: e.target.value.toLowerCase()})} />
                 </div>
                 {this.renderRow()}
             </div>

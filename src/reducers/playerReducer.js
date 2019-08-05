@@ -3,6 +3,7 @@ import axios from "axios";
 const initialState = {
     player: {},
     currentlyPlayingSong: null,
+    currentlyPlayingDeviceId: null,
     deviceId: null,
     isPlaying: false,
     deviceOnline: false
@@ -21,7 +22,8 @@ export default function reducer(state = initialState, action){
             console.log(payload)
             return { ...state, 
                 currentlyPlayingSong: payload.data.song,
-                isPlaying: payload.data.play };
+                isPlaying: payload.data.play,
+                currentlyPlayingDeviceId: payload.data.deviceId };
         case SET_PLAY_PAUSE:
             return { ...state, isPlaying: payload };
         case SET_DEVICE_ONLINE:

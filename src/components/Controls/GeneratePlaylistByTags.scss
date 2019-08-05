@@ -13,7 +13,7 @@
     flex-direction: column;
     // justify-content: space-between;
     overflow: auto;
-    height: 6em;
+    height: 8em;
     width: 100%;
     border: 2px solid $text-color;
     border-top: none;
@@ -69,6 +69,7 @@
     padding-left: 1em;
     margin: 0 .5em;
     color: #fff;
+    width: 50%;
 }
 
 .filter-input::placeholder{

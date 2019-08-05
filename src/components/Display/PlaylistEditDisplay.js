@@ -61,7 +61,7 @@ class PlaylistEditDisplay extends Component{
         
         return(
             <div className='playlist-edit-display'>
-                {this.state.showModal ? <ImageModal 
+                {/* {this.state.showModal ? <ImageModal 
                     passedImageUrl={this.state.imageUrl}
                     toggleModal={this.toggleModal}
                     upload={this.uploadImage}/> : null}
@@ -73,7 +73,7 @@ class PlaylistEditDisplay extends Component{
                         >Add Image</button>
                         
                     </div>
-                </div>
+                </div> */}
                 <form>
                     <div>
                         <label>Playlist Name</label>

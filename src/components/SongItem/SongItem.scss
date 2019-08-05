@@ -127,3 +127,18 @@
     justify-content: center;
     align-items: center;
 }
+
+.add-song-button{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .25em;
+    button{
+        background: transparent;
+        padding: .25em 1em;
+        border: 2px solid $text-color;
+        color: $text-color;
+        border-radius: 20px;
+    }
+}

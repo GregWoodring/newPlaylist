@@ -18,7 +18,7 @@ let PlayPauseControl = props => {
                 token = token.data;
                 
                 let requestObj = {
-                    url: `https://api.spotify.com/v1/me/player/pause?device_id=${props.deviceId}`,
+                    url: `https://api.spotify.com/v1/me/player/pause?device_id=${props.currentlyPlayingDeviceId ? props.currentlyPlayingDeviceId : props.deviceId}`,
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ let PlayPauseControl = props => {
                 token = token.data;
                 
                 let requestObj = {
-                    url: `https://api.spotify.com/v1/me/player/play?device_id=${props.deviceId}`,
+                    url: `https://api.spotify.com/v1/me/player/play?device_id=${props.currentlyPlayingDeviceId ? props.currentlyPlayingDeviceId : props.deviceId}`,
                     method: 'PUT',
                     data: { "uris": [props.song.spotify_uri]},
                     headers: {
@@ -60,7 +60,8 @@ function mapStateToProps(state){
         currentlyPlayingURI: state.player.currentlyPlayingSong ? state.player.currentlyPlayingSong.spotify_uri : null,
         player: state.player.player,
         deviceId: state.player.deviceId,
-        isPlaying: state.player.isPlaying
+        isPlaying: state.player.isPlaying,
+        currentlyPlayingDeviceId: state.player.currentlyPlayingDeviceId
     }
 }
 

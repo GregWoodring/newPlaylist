@@ -19,6 +19,7 @@ const { connectionString, session_secret } = require('../secret.js');
 
 let app = express();
 
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(express.json());
 app.use(session({
     cookie: {

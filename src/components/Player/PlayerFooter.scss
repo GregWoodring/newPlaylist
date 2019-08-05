@@ -1,5 +1,6 @@
 @import '../../styles/variables.scss';
 
+
 .player-footer{
     position: absolute;
     bottom: 0;
@@ -9,8 +10,8 @@
     background-color: $background-color;
     animation: $fade-in;
     display: flex;
-
-}
+    border-top: 1px solid $text-color;
+}  
 
 .currently-playing-info{
     color: $text-color;
@@ -22,8 +23,50 @@
     font-family: $font;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 60%;
+    overflow: hidden;
 
     p{
         margin: .2em 0;
     }
+}
+
+.player-footer-fetch{
+    width: 4rem;
+    height: 1.5rem;
+    color: $text-color;
+    background-color: $background-color;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 2rem);
+    border: 1px solid $text-color;
+    border-bottom: none;
+    font-size: 1.5em;
+    
+}
+
+.play-pause-control-footer{
+    width: 15%;
+    height: 100%;
+}
+
+.footer-controls{
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collapse-footer{
+    height: 2em;
+    width: 2em;
+    border: 2px solid $text-color;
+    color: $text-color;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 .5em;
 }

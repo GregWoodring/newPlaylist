@@ -33,7 +33,7 @@ class SongSearch extends Component{
                 {this.props.fetchingSearch ? <div></div> :
                 <SongList 
                     list={this.props.searchResults}
-                    passedStyle={{height: '45vh'}}
+                    passedStyle={{height: '53.5vh'}}
                 />
                 }
                 <div className="nav-buttons">

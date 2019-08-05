@@ -1,0 +1,67 @@
+@import '../../styles/variables.scss';
+
+.add-tag-button-popup{
+    height: 2em;
+    width: 2em;
+    border: 2px solid $text-color;
+    border-radius: 50%;
+    color: $text-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-tag-modal-popup{
+    position: fixed;
+    height: 80vh;
+    width: 80vw;
+    top: 10vh;
+    left: 10vw;
+    background-color: $background-color;
+    color: $text-color;
+    font-family: $font;
+    border: 2px solid $green;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    -webkit-font-smoothing: antialiased;
+    justify-content: space-between;
+}
+
+.existing-tags-list-popup{
+    height: 80%;
+    width: 100%;
+}
+
+.open-modal{
+    animation: $fade-in;
+}
+
+.close-modal{
+    animation: $fade-out;
+}
+
+.modal-controls{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        background-color: transparent;
+        color: #fff;
+        padding: 1em;
+        font-size: 1em;
+    }
+}
+
+.input-tag-container{
+    margin: 0;
+    height: 7%;
+    width: 100%;
+
+    .input-tag{
+        height: 100%;
+    }
+}

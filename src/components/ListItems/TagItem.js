@@ -4,8 +4,8 @@ import { faPlus, faMinus, faThumbtack } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { updatePinnedTags } from '../../reducers/tagReducer';
-import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
-import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
+// import { updatePlaylistSongTags } from '../../reducers/playlistReducer';
+// import { updateRecentlyPlayedTags } from '../../reducers/recentlyPlayedReducer';
 
 import './TagItem.scss';
 /*
@@ -63,12 +63,12 @@ let TagItem = props => {
                                 }).then(res => {
                                     //console.log(res); -- Need to update in reducer from here, use reducer function in this spot
                                     console.log(props.pageHeader === 'Recently Played')
-                                    if(props.pageHeader === 'Recently Played'){
-                                        props.updateRecentlyPlayedTags(props.songId, res.data) 
+                                    // if(props.pageHeader === 'Recently Played'){
+                                    //     props.updateRecentlyPlayedTags(props.songId, res.data) 
 
-                                    } else {
-                                        props.updatePlaylistSongTags(props.songId, res.data);
-                                    }
+                                    // } else {
+                                    //     props.updatePlaylistSongTags(props.songId, res.data);
+                                    // }
                                     setAdded(true)})
                                 .catch(err =>  console.log(err));
 
@@ -78,7 +78,7 @@ let TagItem = props => {
                         
                         
                 }
-                {
+                {/* {
                     isPinned ?
                     (!props.songTagItem.default_tag ? 
                     <button className='remove-pinned-tag'
@@ -104,7 +104,7 @@ let TagItem = props => {
                     >
                         <FontAwesomeIcon icon={faThumbtack} />
                     </button>
-                }
+                } */}
             </div>
         </div>
     )
@@ -116,4 +116,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { updatePinnedTags, updatePlaylistSongTags, updateRecentlyPlayedTags })(TagItem)
+export default connect(mapStateToProps, { updatePinnedTags })(TagItem)
