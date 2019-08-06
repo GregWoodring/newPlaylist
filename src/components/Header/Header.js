@@ -25,7 +25,7 @@ class Header extends Component{
                 <div 
                     className='nav-toggle'
                     onClick={() => {
-                        this.props.toggleSidebar()}}>
+                        this.props.toggleSidebar(true)}}>
                     <i className="fa fa-bars"></i>
                 </div>
                 <div>
@@ -61,7 +61,8 @@ class Header extends Component{
 
 function mapStateToProps(state){
     return {
-        pageHeader: state.routing.pageHeader
+        pageHeader: state.routing.pageHeader,
+        showSidebar: state.routing.showSidebar
     }
 }
 

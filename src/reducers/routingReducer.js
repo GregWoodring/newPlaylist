@@ -11,7 +11,7 @@ export default function reducer(state = initialState, action){
         case CHANGE_PAGE_HEADER:
             return {...state, pageHeader: payload};
         case TOGGLE_SIDEBAR:
-            return {...state, showSidebar: !state.showSidebar}
+            return {...state, showSidebar: payload}
         default:
             return state;
     }
@@ -27,8 +27,9 @@ export const changePageHeader = header => {
     }
 }
 
-export const toggleSidebar = () => {
+export const toggleSidebar = (show) => {
     return {
+        payload: show,
         type: TOGGLE_SIDEBAR
     }
 }

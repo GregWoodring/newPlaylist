@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import { withRouter } from 'react-router-dom';
 import { getUserTags } from '../../reducers/tagReducer';
 import './GeneratePlaylistByTags.scss';
 
@@ -106,12 +106,16 @@ class GeneratePlaylistByTags extends Component{
                     </div>
                     
                     <button 
-                        className='create-button'
+                        disabled={this.props.playlistId ? false : true}
+                        className={`${this.props.playlistId ? 'create-button' : 'disabled-button'}`} 
                         onClick={() => {
                         axios.post(`/api/add_songs_by_id/${this.props.playlistId}`, {
                             includeList: this.state.includeList,
                             excludeList: this.state.excludeList
-                        })
+                        }).then(res => {
+                            
+                        });
+
                     }}>
                         Add Songs by Tag
                     </button>
@@ -127,4 +131,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { getUserTags })(GeneratePlaylistByTags);
+export default connect(mapStateToProps, { getUserTags })(withRouter(GeneratePlaylistByTags));

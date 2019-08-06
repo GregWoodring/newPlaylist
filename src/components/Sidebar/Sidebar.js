@@ -1,18 +1,38 @@
-import React, {useState} from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { changeCurrentPlaylist } from '../../reducers/playlistReducer';
+import { toggleSidebar } from '../../reducers/routingReducer';
+import { withRouter } from 'react-router-dom';
+import useDetectOutsideClick from '../../customHooks/detectOutsideClick';
 
 import './Sidebar.scss';
 
 let Sidebar = props => {
-
+    const wrapperRef = useRef(null);
+    useDetectOutsideClick(wrapperRef, () => {props.toggleSidebar(false)})
     return(
-        <div className={props.showSidebar ? 'sidebar open-left' : 'hide'}>
+        <div 
+            className={props.showSidebar ? 'sidebar open-left' : 'hide'}
+            ref={wrapperRef}
+            >
             <ol>
-                <Link exact to='/main'><li onClick={() => props.changeCurrentPlaylist(null)}>Recently Played</li></Link>
-                <Link to='/main/playlists'><li onClick={() => props.changeCurrentPlaylist(null)}>Playlists</li></Link>
-                <Link to='/main/edit_playlist'><li onClick={() => props.changeCurrentPlaylist(null)}>Add Playlist</li></Link>
+                <li onClick={() => {
+                    props.changeCurrentPlaylist(null);
+                    props.history.push(props.match.url)
+                    props.toggleSidebar(false);
+                    
+                }}>Recently Played</li>
+                <li onClick={() => {
+                    props.changeCurrentPlaylist(null);
+                    props.history.push(props.match.url + '/playlists')
+                    props.toggleSidebar(false);
+                }}>Playlists</li>
+                <li onClick={() => {
+                    console.log('here')
+                    props.changeCurrentPlaylist(null);
+                    props.history.push(props.match.url + '/edit_playlist');
+                    props.toggleSidebar(false);
+                }}>Add Playlist</li>
             </ol>
         </div>
     )
@@ -24,4 +44,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { changeCurrentPlaylist })(Sidebar);
+export default connect(mapStateToProps, { changeCurrentPlaylist, toggleSidebar })(withRouter(Sidebar));
