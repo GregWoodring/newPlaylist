@@ -62,7 +62,6 @@ let TagItem = props => {
                                     songId: props.songId
                                 }).then(res => {
                                     //console.log(res); -- Need to update in reducer from here, use reducer function in this spot
-                                    console.log(props.pageHeader === 'Recently Played')
                                     // if(props.pageHeader === 'Recently Played'){
                                     //     props.updateRecentlyPlayedTags(props.songId, res.data) 
 

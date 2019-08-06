@@ -1,12 +1,12 @@
 @import '../../styles/variables.scss';
 
 .sidebar{
-    position: absolute;
+    position: fixed;
     height: 93vh;
     width: 60vw;
     background-color: $alt-background-color;
-    bottom:0;
     left:0;
+    top:7vh;
     border-right: 1px solid $text-color;
     z-index: 1000;
 
