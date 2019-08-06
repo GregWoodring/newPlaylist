@@ -48,8 +48,8 @@ class Header extends Component{
                             <li
                                 onClick={() => {
                                     axios.post('/auth/logout');
-                                    window.location.href='http://localhost:3000/'
-                                }}
+                                    window.location.href= process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://newplaylist.gregwoodring.com/'
+                                }} 
                             >Log out</li>
                         </ol>
                     </div>

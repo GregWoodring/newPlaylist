@@ -84,7 +84,7 @@ module.exports = {
         try{
             let db = req.app.get('db');
             let { song_id : songId } = req.params;
-            let userId = 1 //req.session.user.userid;
+            let userId = req.session.user.userid;
             if(!songId){
                 
             }

@@ -38,7 +38,7 @@ class Login extends Component{
         //when I move into production. Which I should set up sooner rather than
         //later 
         let client_id = '3667c6a4d310432b92db1055bea04e22';
-        let redirect_uri = 'http://www.newplaylist.gregwoodring.com/auth/spotify';
+        let redirect_uri = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/auth/spotify' : 'http://newplaylist.gregwoodring.com/auth/spotify';
         let scope = [
             'user-read-email',
             'user-read-recently-played', 

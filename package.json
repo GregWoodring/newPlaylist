@@ -29,6 +29,7 @@
     "redux-promise-middleware": "^6.1.0"
   },
   "scripts": {
+    "start_dev" : "NODE_ENV='development' PORT=3000 react-scripts start",
     "start": "node server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

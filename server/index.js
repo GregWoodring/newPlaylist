@@ -5,7 +5,7 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 require('dotenv').config();
 
-let { SERVER_PORT } = process.env
+let { PORT } = process.env
 
 //controllers
 const authController = require('./controllers/auth/authController');
@@ -79,8 +79,8 @@ app.get('/api/get_user_tags', authMiddleware.userOnly, authMiddleware.reAuth, da
 
 
 
-app.listen(SERVER_PORT, () => {
-    console.log(`Listening on port: ${SERVER_PORT}`)
+app.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`)
 })
 
 } catch(err){

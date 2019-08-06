@@ -69,7 +69,7 @@ module.exports = {
                         //res.send(result);
                         //console.log(result[0])
                         req.session.user = result[0];
-                        res.redirect('http://localhost:3000/')
+                        res.redirect(process.env.NODE_ENV === 'development' ?  'http://localhost:3000' : 'http://newplaylist.gregwoodring.com/')
                     }).catch(err => {
                         //res.send(`Error ${err}`).status(500);
                         console.log(err)
