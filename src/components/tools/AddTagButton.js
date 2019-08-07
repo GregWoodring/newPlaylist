@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import './AddTagButton.scss';
 import InputTag from '../tools/InputTag';
@@ -10,7 +10,8 @@ import { getUserTags } from '../../reducers/tagReducer';
 
 let AddTagButton = props => {
     let [modalState, setModalState] = useState('hide');
-    
+    const [tagList, setTagList] = useState(props.song.tags_arr);
+
     return(
         <div 
             className='add-tag-button'
@@ -27,9 +28,12 @@ let AddTagButton = props => {
                     <div className='existing-tags-list'>
                         <PreviousTagsList 
                             song={props.song}
+                            tagList={tagList}
+                            addRemoveTag={(newTagList) => {setTagList(newTagList)}}
                         />
                         <CurrentTagList 
                             song={props.song}
+                            tagList={tagList}
                         />
                     </div>
                     

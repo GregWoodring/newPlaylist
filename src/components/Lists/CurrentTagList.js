@@ -1,20 +1,23 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import TagItem from '../ListItems/TagItem';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import './TagList.scss';
 
 let CurrentTagList = props => {
-    let [tagList, setTagList] = useState([]);
+    const [tagList, setTagList] = useState([]);
+    
+    
 
     useEffect(() => {
         axios.get(`/api/song_tag/${props.song.song_id}`).then(res => {
-            console.log('set tags', res.data);
             setTagList(res.data);
         })
-    }, [props.song.song_id])
+    }, [props.song.song_id, props.tagList])
     return (
-        <div className='pinned-tag-list'>
+        <div 
+            className='pinned-tag-list'
+        >
             <h2> Current Tags: </h2>
             <div className='tag-list'>
                 {

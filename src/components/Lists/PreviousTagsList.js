@@ -7,7 +7,7 @@ let PreviousTagsList = props => {
     let [filterText, setFilterText] = useState('');
     useEffect(() => {
         props.getUserTags();
-    }, []);
+    }, [props.tagList]);
 
     return (
             <div 
@@ -30,7 +30,7 @@ let PreviousTagsList = props => {
                                 songTagItem={item}
                                 isAdded={isAdded}
                                 isPinned={false}
-                                
+                                addRemoveTag={props.addRemoveTag}
                                 />
                         )
                         }) : null}
@@ -45,4 +45,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, { getUserTags})(PreviousTagsList);
+export default connect(mapStateToProps, { getUserTags })(PreviousTagsList);

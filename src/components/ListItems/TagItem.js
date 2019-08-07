@@ -48,8 +48,12 @@ let TagItem = props => {
                         
                         <button className='remove-tag'
                             onClick={ () => {
-                                axios.delete(`/api/remove_song_tag/${props.songTagItem.song_tag_id}`).then(res => console.log(res));
-                                setAdded(false);
+                                axios.delete(`/api/remove_song_tag/${props.songTagItem.song_tag_id}`).then(res => {
+                                    props.addRemoveTag(res.data);
+                                    setAdded(false);
+                                }).catch(err => console.log(`Error deleting tag ${props.songTagItem.tag_id} ERROR: ${err}`));
+                                
+                                
                             }} >
                             <FontAwesomeIcon icon={faMinus} />
                         </button> 
@@ -68,8 +72,9 @@ let TagItem = props => {
                                     // } else {
                                     //     props.updatePlaylistSongTags(props.songId, res.data);
                                     // }
+                                    props.addRemoveTag(res.data);
                                     setAdded(true)})
-                                .catch(err =>  console.log(err));
+                                .catch(err =>  console.log(`Error adding tag ${props.songTagItem.tag_id} ERROR: ${err}`));
 
                             }} >
                             <FontAwesomeIcon icon={faPlus} />
