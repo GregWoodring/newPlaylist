@@ -39,7 +39,9 @@ let AddTagButton = props => {
                     
 
                 <InputTag 
-                    songId={props.song.song_id} />
+                    songId={props.song.song_id}
+                    addRemoveTag={(newTagList) => {setTagList(newTagList)}}                    
+                    />
             </div>
         </div>
     )

@@ -32,12 +32,7 @@ let InputTag = props => {
                             tagDescription: tag,
                             songId: props.songId
                         }).then(res =>{
-                            // if(props.pageHeader === 'Recently Played'){
-                            //     props.updateRecentlyPlayedTags(props.songId, res.data) 
-
-                            // } else {
-                            //     props.updatePlaylistSongTags(props.songId, res.data);
-                            // }
+                            props.addRemoveTag(res.data);                 
                         })
                     }
                 }}
