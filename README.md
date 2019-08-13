@@ -6,74 +6,27 @@ and completed features.
 
 ## Features
 
-1. Recently played music history -- partially completed
+1. Recently played music history 
     - Due to limitations of Spotify's api can only fetch last 50 songs
     - Song history will be maintained
-    - TODO: 
-        * Create hourly call that will fetch recently played history for all
-        active users, practically ensuring that no songs are skipped in history
 
-2. View Playlists -- Complete
+2. View Playlists
 
-3. Create/Edit Playlists -- partially complete
-    - Can create and edit a playlist
-    - Data planned to be editable:
-        - Playlist Name -- Complete
-        - Public Status -- Complete
-        - Playlist Cover Image -- partially complete: having trouble posting to api
-        - Add/Remove Playlist tracks -- TODO
+3. Create/Edit Playlists 
 
 
-4. Add/Remove Song Tags -- TODO
-
-5. Add Song Ratings -- TODO
-    - At least have dislike(exclude)
-
-6. Playlist Generator -- TODO
-    - Select Tags to include
-        - Must build UI that should at least show the amount of songs you've tagged with 
-        given tag
-    - Select Tags to exclude
-
-7. Implement Playback Web API -- TODO
+4. Add/Remove Song Tags 
 
 
-## TODOs
+5. Playlist Generator 
+    - Select Tagged songs to include
+    - Select Tagged songs to exclude
 
-1. Create hourly call
-    - May want to set up seperate server / look into gulp for multi-threading
+6. Play songs directly through app
 
-2. Add Playlist Tracks
-    - Should use menu on Song Items
-        - Popup on click of icon -- on
-        - Should have ability to add to current playlist if there is one
-        - Should be able to add to any other playlist as well
-            - Should be able to use PlaylistList component for playlist selection,
-            will require refactoring to allow the unclick function to be over-written
-        - Should be able to see playlists song is in, and remove song from any playlist
-
-3. Add Song Tags
-    - Add as control not on changeable control panel but song display itself
-        * use popup here
-    - Should also be able to be done through SongItem menu
-        * use same popup
+7. See and tag songs through any playback source
 
 
-4. Playlist Generator
-            
-5. CSS changes for larger screens - currently only really built for phones
-    - Song Items:
-        * should expand song item menue to be different buttons on the row
-
-6. Update playlist to Spotify's, update spotify to playlist
-
-
-## Bugs
-
-1. login redirects to bad page '_=_'?
-2. Logout gets hidden by sync
-3. If you are logged out you aren't always redirected to login screen
-    - likely need to have error handler that redirects when logout status code comes through
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
