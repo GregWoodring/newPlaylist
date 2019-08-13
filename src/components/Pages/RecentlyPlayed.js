@@ -8,9 +8,7 @@ import SongList from '../SongList/SongList';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 class RecentlyPlayed extends Component{
-    constructor(props){
-        super(props);
-    }
+    
     componentWillMount(){
         this.props.changePageHeader('Recently Played');
         this.props.getRecentlyPlayed();
