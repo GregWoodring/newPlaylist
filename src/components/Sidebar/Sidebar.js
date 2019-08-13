@@ -28,7 +28,6 @@ let Sidebar = props => {
                     props.toggleSidebar(false);
                 }}>Playlists</li>
                 <li onClick={() => {
-                    console.log('here')
                     props.changeCurrentPlaylist(null);
                     props.history.push(props.match.url + '/edit_playlist');
                     props.toggleSidebar(false);

@@ -17,7 +17,6 @@ class RecentlyPlayed extends Component{
     }
     
     render(){
-        console.log('recently played props', this.props)
         return(
             
            <div>

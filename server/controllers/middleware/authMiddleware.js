@@ -6,7 +6,6 @@ module.exports = {
     userOnly: (req,res,next) => {
         try{
             if(req.session.user){
-                console.log('user logged in');
                 next();
             } else {
                 res.send('Please log in').status(401);
@@ -61,17 +60,14 @@ module.exports = {
                 })
 
                 if(difference > 0){
-                    console.log('within 55')
                     next();
                 } else {
-                    console.log('set timeout')
                     setTimeout(next, 2000); 
                     //might want to redo this with proper async wait, but 2 seconds should be long enough 
                     //to ensure that the database is updated
                 }
                 
             } else {
-                console.log('passed to next')
                 next();
             }
         } catch(err){

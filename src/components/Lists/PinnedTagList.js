@@ -8,7 +8,6 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import './TagList.scss'
 
 let PinnedTagList = props => {
-    console.log(props.pinnedTags)
 
     return (
         <div className='pinned-tag-list'>

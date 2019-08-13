@@ -185,7 +185,6 @@ module.exports = {
 
             let data = await axios(requestObj);
             let pagingObj = cleanSearchResults(data);
-            console.log(pagingObj);
             res.send(pagingObj).status(200);
         } catch(err){
             console.log(err);
@@ -223,7 +222,6 @@ module.exports = {
             let data = await axios(requestObj);
             let [song] = await db.get_or_import_song(JSON.stringify(data.data.item));
             // song = song.data;
-            console.log(song)
             res.send({
                 song,
                 play:  data.data.is_playing,

@@ -12,7 +12,6 @@ module.exports = {
     logout: (req, res) => {
         try{
             delete req.session.user;
-            console.log('post logout:', req.session)
             res.redirect('/');
         } catch(err){
             console.log(err);
@@ -45,14 +44,11 @@ module.exports = {
                         'Authorization' : `Bearer ${access_token}`
                     }
                 }
-                console.log('access_token: ', access_token);
                 axios(request).then(result => {
-                    console.log('I got: ', result);
                     let { id, display_name, email, /* url */ birthdate, country, /*followers*/ href } = result.data
                     let url = result.data.external_urls.spotify;
                     let followers = result.data.followers.total;
                     
-                    //console.log('saving user data:', result);
                     req.app.get('db').create_or_update_user(
                         id,
                         display_name,
@@ -67,7 +63,6 @@ module.exports = {
                         refresh_token
                     ).then(async result => {
                         //res.send(result);
-                        //console.log(result[0])
                         req.session.user = result[0];
                         res.redirect(process.env.NODE_ENV === 'development' ?  'http://localhost:3000' : 'http://newplaylist.gregwoodring.com/')
                     }).catch(err => {

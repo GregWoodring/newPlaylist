@@ -22,7 +22,6 @@ class PlaylistSongs extends Component {
     render(){
         let header = this.props.currentPlaylist ? this.props.currentPlaylist.playlist_name : '...fetching';
         this.props.changePageHeader(header);
-        console.log('current:', this.props.currentPlaylist)
         return (
             <div>
                 {this.props.fetchingSongs ? 

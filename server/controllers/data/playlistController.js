@@ -213,7 +213,6 @@ module.exports = {
 
             let response = await axios(requestObj);
 
-            console.log(response);
         } catch(err){
             console.log('Error in post playlist image:', err);
             res.send(err).status(500);
@@ -225,9 +224,7 @@ module.exports = {
         try{
             let db = req.app.get('db');
             let user = req.session.user;
-            console.log('user:', user);
             let playlist_id = req.params.playlist_id;
-            console.log('playlist_id:', playlist_id);
             let { name, public_playlist } = req.body;
 
             if(!playlist_id || isNaN(playlist_id)){
@@ -235,7 +232,6 @@ module.exports = {
             }
 
             let playlist_spotify_id = await db.get_playlist_spotify_id(+playlist_id, user.userid);
-            console.log('playlist_spotify_id', playlist_spotify_id)
             let url = `https://api.spotify.com/v1/playlists/${playlist_spotify_id[0].get_playlist_spotify_id}`
             let requestObj = {
                 url,

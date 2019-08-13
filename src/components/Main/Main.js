@@ -68,7 +68,6 @@ class Main extends Component{
       
             // Playback status updates
             player.addListener('player_state_changed', state => { 
-                console.log(state);
                 this.props.getCurrentlyPlaying();
                 //this.props.setCurrentlyPlaying(state.context.uri)
              });

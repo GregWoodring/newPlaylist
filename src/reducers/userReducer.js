@@ -35,7 +35,6 @@ const LOGIN_SPOTIFY = 'LOGIN_SPOTIFY';
 
 export const loginUser = code => {
     let data = axios.post(`/auth/spotify?code=${code}`).then(res => data);
-    console.log('login data:', data);
     return {
         type: LOGIN_SPOTIFY
     }

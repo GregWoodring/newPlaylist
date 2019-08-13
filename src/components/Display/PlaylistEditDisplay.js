@@ -22,7 +22,6 @@ class PlaylistEditDisplay extends Component{
     }
 
     createPlaylist = async () => {
-        console.log('click')
         let data = await axios.post('/api/create_playlist', {
             name: this.state.playlist_name,
             public: this.state.public
@@ -35,7 +34,6 @@ class PlaylistEditDisplay extends Component{
     }
 
     editPlaylist = async () => {
-        console.log(this.props.match.params.playlist_id)
         let data = await axios.put(`/api/edit_playlist/${this.props.match.params.playlist_id}`, {
             name: this.state.playlist_name,
             public: this.state.public

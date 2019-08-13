@@ -22,7 +22,6 @@ class Playlists extends Component{
 
     
     render(){
-        console.log('fetching...', this.props.fetchingPlaylists)
         return (
             <div>
                 {!this.props.fetchingPlaylists ? 

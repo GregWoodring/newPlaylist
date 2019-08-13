@@ -47,7 +47,6 @@ class GeneratePlaylistByTags extends Component{
                         } else {
                             this.setState({includeList: [item.tag_id, ...this.state.includeList]});
                         }
-                        console.log(this.state.includeList);
                     }
                     } />
                     <div>

@@ -53,7 +53,6 @@ class SongDisplay extends Component{
            
             image = this.props.defaultImg;
         }
-        console.log(this.props.currentSong)
 
         return(
             <div className="song-display">

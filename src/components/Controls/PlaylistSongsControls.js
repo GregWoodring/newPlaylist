@@ -7,7 +7,6 @@ import PlayPauseControl from './PlayPauseControl';
 import './PlaylistSongsControls.scss';
 
 let PlaylistSongsControls = props => {
-    console.log('playlist props:', props)
     return(
         <div className='playlist-songs-controls'>
             <SyncPlaylist

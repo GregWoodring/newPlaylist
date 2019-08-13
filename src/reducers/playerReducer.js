@@ -16,10 +16,8 @@ export default function reducer(state = initialState, action){
         case GET_PLAYER:
             return { ...state, player: payload };
         case SET_DEVICE_ID:
-            console.log('device id', payload);
             return { ...state, deviceId: payload };
         case GET_CURRENTLY_PLAYING + '_FULFILLED':
-            console.log(payload)
             return { ...state, 
                 currentlyPlayingSong: payload.data.song,
                 isPlaying: payload.data.play,

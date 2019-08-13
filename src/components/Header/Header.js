@@ -17,7 +17,6 @@ class Header extends Component{
     }
     //let showSettings = false;
     render(){
-        console.log('this Header is: ' + this.props.pageHeader)
         let settingsClass = "settings-panel" + (this.state.showSettings ? '' : ' hide');
         return(
             <div className='header'>

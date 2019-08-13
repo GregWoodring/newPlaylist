@@ -20,10 +20,8 @@ export default function reducer(state = initialState, action){
                 nextUrl: payload.data.next, 
                 previousUrl: payload.data.previous}
         case GET_NEXT_OR_PREVIOUS_RESULT + '_PENDING':
-            console.log('pending')
             return {...state, fetchingSearch: true}
         case GET_NEXT_OR_PREVIOUS_RESULT + '_FULFILLED':
-            console.log('fulfilled:',payload);
             return {...state, fetchingSearch: false,
                 results: payload.data.items, 
                 nextUrl: payload.data.next, 

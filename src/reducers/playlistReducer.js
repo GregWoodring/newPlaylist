@@ -45,14 +45,12 @@ export default function reducer(state = initialState, action){
         case GET_PLAYLIST_INFO + '_PENDING':
             return {...state, fetchingPlaylistInfo: true}
         case GET_PLAYLIST_INFO + '_FULFILLED':
-            console.log('got info:', state.currentPlaylist)
             return {...state, fetchingPlaylistInfo: false, currentPlaylist: payload.data[0] }
         case CREATE_NEW_PLAYLIST:
             return {...state, currentPlaylist: payload }
         case SYNC_PLAYLIST + '_PENDING':
                 return {...state, syncing: true }
         case SYNC_PLAYLIST + '_FULFILLED':
-            console.log('should stop')
             return {...state, syncing: false, playlistList: payload.data}
         // case UPDATE_SONG_TAGS:
             
@@ -155,7 +153,6 @@ export const syncPlaylist = (playlistId) => {
 }
 
 export const addSongs = (playlistId, songsArr) => {
-    console.log('songs arr:', songsArr)
     let data = axios.post('/api/add_song_to_playlist', {
         songsArr,
         playlistId

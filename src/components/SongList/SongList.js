@@ -24,7 +24,6 @@ class SongList extends Component{
     
 
     renderRow = ({index, key, style, parent}) => {
-        //console.log('index is:', index)
         return(
             
             <CellMeasurer 

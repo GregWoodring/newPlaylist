@@ -15,22 +15,18 @@ class ImageModal extends Component{
     }
 
     handleUploadFile = e => {
-        console.log('i tried')
         if(!e.target.files || e.target.files.length < 1) {
-            console.log('not file');
             return;
         }
         let type = e.target.files[0].type;
         type = type.split('/');
         if(type[0] !== 'image') {
-            console.log('problem')
             alert('Please Select an image file');
             e.target.value = null;
             return;
         }
 
         let src = URL.createObjectURL(e.target.files[0]);
-        console.log('src:', src);
         this.setState({
             imageUrl: src
         });
@@ -40,7 +36,6 @@ class ImageModal extends Component{
 
     handleUrl = () => {
         let onloadCallBack = () => {
-            console.log('hello')
             this.setState({
                 imageUrl: this.state.urlInput
             });
