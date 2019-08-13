@@ -55,21 +55,39 @@ class Main extends Component{
             let token = await axios.get('/api/get_access_token');
             token = token.data;
             // eslint-disable-next-line no-undef
-            const player = new Spotify.Player({
+            let player = new Spotify.Player({
               name: 'New Playlist',
               getOAuthToken: cb => { cb(token); }
             });
       
             // Error handling
-            player.addListener('initialization_error', ({ message }) => { console.error(message); });
-            player.addListener('authentication_error', ({ message }) => { console.error(message); });
+            player.addListener('initialization_error', async ({ message }) => { 
+                console.error(message);
+
+                let token = await axios.get('/api/get_access_token');
+                token = token.data;
+                // eslint-disable-next-line no-undef
+                player = new Spotify.Player({
+                    name: 'New Playlist',
+                    getOAuthToken: cb => { cb(token); }
+                }); 
+            });
+            player.addListener('authentication_error', async ({ message }) => { 
+                console.error(message);
+                let token = await axios.get('/api/get_access_token');
+                token = token.data;
+                // eslint-disable-next-line no-undef
+                player = new Spotify.Player({
+                    name: 'New Playlist',
+                    getOAuthToken: cb => { cb(token); }
+                }); 
+            });
             player.addListener('account_error', ({ message }) => { console.error(message); });
             player.addListener('playback_error', ({ message }) => { console.error(message); });
       
             // Playback status updates
             player.addListener('player_state_changed', state => { 
                 this.props.getCurrentlyPlaying();
-                //this.props.setCurrentlyPlaying(state.context.uri)
              });
       
             // Ready
