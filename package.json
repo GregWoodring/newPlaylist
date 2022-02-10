@@ -14,7 +14,7 @@
     "express-session": "^1.16.2",
     "form-data": "^2.3.3",
     "massive": "^5.11.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "pg-promise": "^8.7.2",
     "qs": "^6.7.0",
     "query-string": "^6.7.0",
